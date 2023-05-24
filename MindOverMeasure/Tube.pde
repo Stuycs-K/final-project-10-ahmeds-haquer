@@ -26,5 +26,20 @@ public class Tube {
     }
     return result;
   }
+  public void remove (int quantity){
+     for (int i=0;i<quantity;i++){
+       tube[numBalls]=0;
+       numBalls--;
+     } 
+  }
+  public void add (int quantity){
+    for (int i=0;i<quantity;i++){
+       tube[numBalls]=1;
+       numBalls++;
+     } 
+  }
+  public fill (Tube filler, Tube filled){
+  
+  }
   
 }
