@@ -1,10 +1,13 @@
 # Work Log
 
-## GROUP MEMBER 1
+## Sadat Ahmed
 
 ### date x
 
-info
+5/22/23
+- Started designing the Tube class and added all of the instance variables
+5/23/23
+- Wrote the Tube constructors, fill method, empty method, transfer method, and the necessary helper methods
 
 ### date y
 
