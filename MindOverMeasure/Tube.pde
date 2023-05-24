@@ -4,20 +4,10 @@ public class Tube {
   private int capacity;
   private int numBalls;
   
-  public Tube(String type){// for tube that fills it up
-    if (type.equals("fill")){
-      tube= new int[10];
-      capacity=10;
-      numBalls=10;//update these at the end of fill and dump
-      for (int i=0;i<30;i++){
-        tube[i]=1;
-      }
-    }
-    if (type.equals("empty")){
-      tube=new int[10];
-      capacity=10;
-      numBalls=0;
-    }
+  public Tube(){// for tube that fills it up
+      tube= new int[15];
+      capacity=15;
+      numBalls=15;
   }
 
   public Tube(int size){
@@ -25,5 +15,32 @@ public class Tube {
    capacity=size;
    numBalls=0;
    }
-   
+  public String toString(){
+    String result="|";
+    for (int i=0;i<capacity;i++){
+      if (tube[i]==0){
+        result+="   |";
+      }
+      else{
+        result+=" O |";
+      }
+    }
+    return result;
+  }
+  public void remove (int quantity){
+     for (int i=0;i<quantity;i++){
+       tube[numBalls]=0;
+       numBalls--;
+     } 
+  }
+  public void add (int quantity){
+    for (int i=0;i<quantity;i++){
+       tube[numBalls]=1;
+       numBalls++;
+     } 
+  }
+  public fill (Tube filler, Tube filled){
+  
+  }
+  
 }
