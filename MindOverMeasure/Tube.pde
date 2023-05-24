@@ -39,8 +39,17 @@ public class Tube {
        numBalls++;
      } 
   }
-  public fill (Tube filler, Tube filled){
-  
+
+  public static void fill (Tube filled){
+     tube.remove(filled.capacity-filled.numBalls);
+     filled.add(filled.capacity-filled.numBalls);
   }
-  
+  public static void fill(Tube emptied){
+    tube.add(filled.numBalls);
+    emptied.remove(filled.numBalls);
+ }
+   public static void fill (Tube transferred){
+     tube.remove(transferred.capacity-transferred.numBalls);
+     transferred.add(transferred.capacity-transferred.numBalls);
+   }
 }
