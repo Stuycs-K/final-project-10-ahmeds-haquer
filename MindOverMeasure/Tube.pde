@@ -27,13 +27,13 @@ public class Tube {
     }
     return result;
   }
-  public void remove (int quantity){
+  private void remove (int quantity){
      for (int i=0;i<quantity;i++){
        tube[numBalls]=0;
        numBalls--;
      } 
   }
-  public void add (int quantity){
+  private void add (int quantity){
     for (int i=0;i<quantity;i++){
        tube[numBalls]=1;
        numBalls++;
@@ -44,11 +44,11 @@ public class Tube {
      tube.remove(filled.capacity-filled.numBalls);
      filled.add(filled.capacity-filled.numBalls);
   }
-  public static void fill(Tube emptied){
+  public static void empty(Tube emptied){
     tube.add(filled.numBalls);
     emptied.remove(filled.numBalls);
  }
-   public static void fill (Tube transferred){
+   public static void transfer (Tube transferred){
      tube.remove(transferred.capacity-transferred.numBalls);
      transferred.add(transferred.capacity-transferred.numBalls);
    }
