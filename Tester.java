@@ -13,4 +13,18 @@ public class Tester{
     System.out.println(test);
     System.out.println(test2);
   }
+  public static void solve(Tube one, Tube two){
+    Tube greater=one;
+    Tube lesser=two;
+    if (one.capacity<two.capacity){
+      greater=two;
+      lesser=one;
+    }
+    station.fill(greater);
+    greater.transfer(lesser);
+    if (two.numBalls==two.capacity){
+      station.empty(lesser);
+    }
+    solve(greater,lesser);
+  }
 }
