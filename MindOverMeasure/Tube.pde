@@ -1,53 +1,19 @@
-//import java.util.*;
 public class Tube {
   private int[] tube;
   private int capacity;
   private int numBalls;
-  
-<<<<<<< HEAD
-<<<<<<< HEAD
-  public Tube(){// for tube that fills it up
-=======
-  public Tube(String type){// for tube that fills it up
-    if (
->>>>>>> sadat-demo
-    tube= new int[30];
-    for (int i=0;i<30;i++){
-      tube[i]=1;
-    }
-  }
-<<<<<<< HEAD
-=======
-=======
+
   public Tube(){// for tube that fills it up
       tube= new int[15];
       capacity=15;
       numBalls=15;
   }
 
->>>>>>> 6312f08ac367b55629cc378f19246d7e22add2a2
   public Tube(int size){
    tube=new int[size];
    capacity=size;
    numBalls=0;
    }
-<<<<<<< HEAD
-  
->>>>>>> sadat-demo
-
-  void empty(){
-    for(int i = 0; i < tube.length; i++){
-      tube[i] = 0;
-    }
-  }
-  
-  void fill(){
-    for(int i = numBalls -1; i < tube.length; i++){
-      tube[i] = 0;
-    }
-  }
-    
-=======
   public String toString(){
     String result="|";
     for (int i=0;i<capacity;i++){
@@ -60,30 +26,47 @@ public class Tube {
     }
     return result;
   }
-  private void remove (int quantity){
-     for (int i=0;i<quantity;i++){
-       tube[numBalls]=0;
+  public  void remove (int[] holder,int quantity){
+     for (int i=0;i<quantity&&numBalls>0;i++){
+       holder[numBalls-1]=0;
        numBalls--;
-     } 
+     }
   }
-  private void add (int quantity){
-    for (int i=0;i<quantity;i++){
-       tube[numBalls]=1;
+  public  void remove (Tube holder,int quantity){
+     for (int i=0;i<quantity&&holder.numBalls>0;i++){
+       holder.tube[holder.numBalls-1]=0;
+       holder.numBalls--;
+     }
+  }
+  public void add (int[] holder,int quantity){
+    for (int i=0;i<quantity&&numBalls<capacity;i++){
+       holder[numBalls]=1;
        numBalls++;
-     } 
+     }
+  }
+  public void add (Tube holder,int quantity){
+    for (int i=0;i<quantity&&holder.numBalls<capacity;i++){
+       holder.tube[holder.numBalls]=1;
+       holder.numBalls++;
+     }
   }
 
-  public static void fill (Tube filled){
-     tube.remove(filled.capacity-filled.numBalls);
-     filled.add(filled.capacity-filled.numBalls);
+  public  void fill (Tube filled){
+     remove(tube,filled.capacity-filled.numBalls);
+     add(filled,filled.capacity-filled.numBalls);
   }
-  public static void empty(Tube emptied){
-    tube.add(filled.numBalls);
-    emptied.remove(filled.numBalls);
+  public  void empty(Tube emptied){
+    add(tube,emptied.numBalls);
+    remove(emptied, emptied.numBalls);
  }
-   public static void transfer (Tube transferred){
-     tube.remove(transferred.capacity-transferred.numBalls);
-     transferred.add(transferred.capacity-transferred.numBalls);
+   public  void transfer (Tube transferred){
+     if (numBalls>=transferred.capacity-transferred.numBalls){
+     remove(tube,transferred.capacity-transferred.numBalls);
+     add(transferred,transferred.capacity-transferred.numBalls);
    }
->>>>>>> 6312f08ac367b55629cc378f19246d7e22add2a2
+   else{
+     remove(tube,numBalls);
+     add(transferred,numBalls);
+   }
+ }
 }
