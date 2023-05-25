@@ -5,31 +5,31 @@ Tube emptyStation;
 Tube randTube1;
 Tube randTube2;
 
-setup(){
+void setup(){
   
 }
 
-draw(){
+void draw(){
   
 }
 
-keyPressed(){
+void keyPressed(){
 }
 
-mouseClicked(){
+void mouseClicked(){
   
 }
 
 Tube randomizeTube(){
-  if(randTube1 == 0){
-   int rand = Math.random() * 7 + 1;
-   return Tube(rand);
+  if(randTube1.capacity == 0){
+   int rand = (int)(Math.random() * 7) + 1;
+   return new Tube(rand);
   }
   else{
-    int rand = int(Math.random() * 7) + 1;
-    while(rand == randTube[capacity]){
-     rand = int(Math.random() * 7) + 1; 
+    int rand = (int)(Math.random() * 7) + 1;
+    while(rand == randTube1.capacity){
+     rand = (int)(Math.random() * 7) + 1; 
     }
-    return Tube(rand);
+    return new Tube(rand);
   }
 }
