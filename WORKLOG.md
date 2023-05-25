@@ -9,7 +9,7 @@ Wrote the Tube constructors, fill method, empty method, transfer method, and the
 ### 5/24/23
 There were errors with the Tube constructor, so I fixed this and tested it on Atom.
 ### 5/25/23
-Solved merge conflicts. Began working on solve on Atom.
+Solved merge conflicts. Began working on solve on Atom. Finished a first draft, but did not account for possibility of no solution.
 
 info
 
