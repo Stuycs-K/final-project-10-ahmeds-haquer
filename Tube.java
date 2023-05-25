@@ -27,29 +27,47 @@ public class Tube {
     }
     return result;
   }
-  public  void remove (int quantity){
-     for (int i=0;i<quantity;i++){
-       tube[numBalls]=0;
+  public  void remove (int[] holder,int quantity){
+     for (int i=0;i<quantity&&numBalls>0;i++){
+       holder[numBalls-1]=0;
        numBalls--;
      }
   }
-  public void add (int quantity){
-    for (int i=0;i<quantity;i++){
-       tube[numBalls]=1;
+  public  void remove (Tube holder,int quantity){
+     for (int i=0;i<quantity&&holder.numBalls>0;i++){
+       holder.tube[holder.numBalls-1]=0;
+       holder.numBalls--;
+     }
+  }
+  public void add (int[] holder,int quantity){
+    for (int i=0;i<quantity&&numBalls<capacity;i++){
+       holder[numBalls]=1;
        numBalls++;
+     }
+  }
+  public void add (Tube holder,int quantity){
+    for (int i=0;i<quantity&&holder.numBalls<capacity;i++){
+       holder.tube[holder.numBalls]=1;
+       holder.numBalls++;
      }
   }
 
   public  void fill (Tube filled){
-     tube.remove(filled.capacity-filled.numBalls);
-     filled.add(filled.capacity-filled.numBalls);
+     remove(tube,filled.capacity-filled.numBalls);
+     add(filled,filled.capacity-filled.numBalls);
   }
   public  void empty(Tube emptied){
-    tube.add(filled.numBalls);
-    emptied.remove(filled.numBalls);
+    add(tube,emptied.numBalls);
+    remove(emptied, emptied.numBalls);
  }
    public  void transfer (Tube transferred){
-     tube.remove(transferred.capacity-transferred.numBalls);
-     transferred.add(transferred.capacity-transferred.numBalls);
+     if (numBalls>=transferred.capacity-transferred.numBalls){
+     remove(tube,transferred.capacity-transferred.numBalls);
+     add(transferred,transferred.capacity-transferred.numBalls);
    }
+   else{
+     remove(tube,numBalls);
+     add(transferred,numBalls);
+   }
+ }
 }
