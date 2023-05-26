@@ -15,12 +15,13 @@ Finished solve. Added two helper methods, one that finds the GCD of two numbers 
 info
 
 
-## GROUP MEMBER 2
+## Ramisa Haque
 
-### date x
+### 5/22/23
+Wrote empty() and fill methods for the Tube class.
+### 5/23/23
 
-info
-
-### date y
-
-info
+### 5/24/23
+Wrote an outline for the Mind Over Measure class (with methods); paper diagrams to design the specific aspects.
+### 5/25/23
+Wrote randomizeTube method, wrote methods to account for the differences in drawing of capped tubes, empty station (tube obj), and fill station (also tube obj).
