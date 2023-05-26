@@ -5,12 +5,14 @@
 ### 5/22/23
 Started designing the Tube class and added all of the instance variables
 ### 5/23/23
-Wrote the Tube constructors, fill method, empty method, transfer method, and the necessary helper methods
+Wrote the Tube constructors. Altered the fill method, empty method, transfer method, and the necessary helper methods
 ### 5/24/23
 There were errors with the Tube constructor, so I fixed this and tested it on Atom.
 ### 5/25/23
 Solved merge conflicts. Began working on solve on Atom. Finished a first draft, but did not account for possibility of no solution.
 
+## 5/26/23
+Finished solve. Added two helper methods, one that finds the GCD of two numbers using Euclid's algorithm and another that checks if there is a solution. For homework from the day before, I did it during a free period and wrote the helper methods. I cleaned it up and finished up the solve code. 
 info
 
 
