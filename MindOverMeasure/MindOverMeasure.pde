@@ -11,6 +11,7 @@ void setup(){
   drawCapTubes();
   drawFiller();
   drawEmptier();
+  randTube1 = new Tube(3);
 }
 
 void draw(){
@@ -26,13 +27,13 @@ void mouseClicked(){
 
 Tube randomizeTube(){
   if(randTube1.capacity == 0){
-   int rand = (int)(Math.random() * 7) + 1;
+   int rand = (int)(Math.random() * 7) + 2;
    return new Tube(rand);
   }
   else{
-    int rand = (int)(Math.random() * 7) + 1;
+    int rand = (int)(Math.random() * 7) + 2;
     while(rand == randTube1.capacity){
-     rand = (int)(Math.random() * 7) + 1; 
+     rand = (int)(Math.random() * 7) + 2; 
     }
     return new Tube(rand);
   }
@@ -46,11 +47,27 @@ void drawCapTubes(){
     //textFont(font);
     fill(255);
     stroke(#143DA2);
-    rect(i, 150, 50, 370);
+    int y = 370;
+    rect(i, 150, 50, y);
     textSize(30);
     fill(0);
     text(""+ tubeNum, i + 20, 180);
     tubeNum++;
+    //draw balls
+    if(tubeNum == randTube1.capacity){
+      for(int j = 0; j < randTube1.numBalls; j++){
+         fill(255);
+         circle(i, y, 45);
+         y -= 45;
+      }
+    }
+    else if(tubeNum == randTube2.capacity){
+      for(int j = 0; j < randTube2.numBalls; j++){
+        fill(255);
+        circle(i, y, 45);
+        y -= 45;
+      }
+    }
   }
 }
 
@@ -60,7 +77,7 @@ void drawFiller(){
   rect(width - 180, 100, 50, 420);
   fill(0);
   textSize(17);
-  text("fill", width - 165, 130);
+  text("fill", width - 165, 120);
 }
 
 void drawEmptier(){
@@ -69,5 +86,5 @@ void drawEmptier(){
   rect(width - 120, 100, 50, 420);
   fill(0);
   textSize(17);
-  text("empty", width - 120, 130);
+  text("empty", width - 115, 120);
 }
