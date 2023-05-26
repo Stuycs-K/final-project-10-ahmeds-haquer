@@ -5,7 +5,7 @@ Tube emptyStation;
 Tube randTube1;
 Tube randTube2;
 
-void setup(){
+void setup() {
   size(900, 600);
   background(#8AC4F0);
   drawCapTubes();
@@ -14,34 +14,31 @@ void setup(){
   randTube1 = new Tube(3);
 }
 
-void draw(){
-  
+void draw() {
 }
 
-void keyPressed(){
+void keyPressed() {
 }
 
-void mouseClicked(){
-  
+void mouseClicked() {
 }
 
-Tube randomizeTube(){
-  if(randTube1.capacity == 0){
-   int rand = (int)(Math.random() * 7) + 2;
-   return new Tube(rand);
-  }
-  else{
+Tube randomizeTube() {
+  if (randTube1.capacity == 0) {
     int rand = (int)(Math.random() * 7) + 2;
-    while(rand == randTube1.capacity){
-     rand = (int)(Math.random() * 7) + 2; 
+    return new Tube(rand);
+  } else {
+    int rand = (int)(Math.random() * 7) + 2;
+    while (rand == randTube1.capacity) {
+      rand = (int)(Math.random() * 7) + 2;
     }
     return new Tube(rand);
   }
 }
 
-void drawCapTubes(){
+void drawCapTubes() {
   int tubeNum = 2;
-  for(int i = 150; tubeNum <= 8; i+=80){
+  for (int i = 150; tubeNum <= 8; i+=80) {
     //figure out font stuff
     //PFont font = createFont("STHeitiTC-Medium-30.vlw", 30);
     //textFont(font);
@@ -54,24 +51,25 @@ void drawCapTubes(){
     text(""+ tubeNum, i + 20, 180);
     tubeNum++;
     //draw balls
-    if(tubeNum == randTube1.capacity){
-      for(int j = 0; j < randTube1.numBalls; j++){
-         fill(255);
-         circle(i, y, 45);
-         y -= 45;
-      }
-    }
-    else if(tubeNum == randTube2.capacity){
-      for(int j = 0; j < randTube2.numBalls; j++){
-        fill(255);
-        circle(i, y, 45);
-        y -= 45;
+    if (randTube1 != null) {
+      if (tubeNum == randTube1.capacity) {
+        for (int j = 0; j < randTube1.numBalls; j++) {
+          fill(255);
+          circle(i, y, 45);
+          y -= 45;
+        }
+      } else if (tubeNum == randTube2.capacity) {
+        for (int j = 0; j < randTube2.numBalls; j++) {
+          fill(255);
+          circle(i, y, 45);
+          y -= 45;
+        }
       }
     }
   }
 }
 
-void drawFiller(){
+void drawFiller() {
   fill(#E8ECF5);
   stroke(#485983);
   rect(width - 180, 100, 50, 420);
@@ -80,7 +78,7 @@ void drawFiller(){
   text("fill", width - 165, 120);
 }
 
-void drawEmptier(){
+void drawEmptier() {
   fill(#E8ECF5);
   stroke(#485983);
   rect(width - 120, 100, 50, 420);
