@@ -28,19 +28,21 @@ public class Tester{
     }
     return false;
   }
-  public static void solve(Tube one, Tube two,int numBalls){
+  public static void solve(Tube one, Tube two,int numbBalls){
     if (isPossible(one,two,numBalls))
-    Tube greater=one;
-    Tube lesser=two;
-    if (one.capacity<two.capacity){
-      greater=two;
-      lesser=one;
+      Tube greater=one;
+      Tube lesser=two;
+      if (one.capacity<two.capacity){
+        greater=two;
+        lesser=one;
+      }
+      station.fill(greater);
+      greater.transfer(lesser);
+      if (two.numBalls==two.capacity){
+        station.empty(lesser);
+      }
+      if (greater.numBalls!=numbBalls && lesser.numBalls!=numBalls){
+        solve(greater,lesser);
+      }
     }
-    station.fill(greater);
-    greater.transfer(lesser);
-    if (two.numBalls==two.capacity){
-      station.empty(lesser);
-    }
-    solve(greater,lesser);
-  }
 }
