@@ -15,6 +15,9 @@ Solved merge conflicts. Began working on solve on Atom. Finished a first draft, 
 Finished solve. Added two helper methods, one that finds the GCD of two numbers using Euclid's algorithm and another that checks if there is a solution. For homework from the day before, I did it during a free period and wrote the helper methods. I cleaned it up and finished up the solve code.
 info
 
+## 5/29/23
+Added solve onto processing, and made necessary changes for it to work there. 
+
 
 ## Ramisa Haque
 
