@@ -13,14 +13,17 @@ static int MODE = numSelect;
 
 void setup() {
   size(900, 600);
+  frameRate(10);
+  randTube1 = new Tube(3);
+  randTube2 = new Tube(5);
+}
+
+void draw() {
   background(#8AC4F0);
   drawCapTubes();
   drawFiller();
   drawEmptier();
-  randTube1 = new Tube(3);
-}
-
-void draw() {
+  
   if (keyPressed) {
     if (MODE == TRANSFER) {
       textSize(30);
@@ -43,9 +46,14 @@ void keyPressed() {
     }
     textSize(30);
     fill(0);
-    text("Please click to select a tube to transfer to.", 20, 40);
+    text("Please click to select a tube to transfer into.", 20, 40);
     if (mousePressed && selectedTube != transFrom) {
       transTo = selectedTube;
+    }
+    while (selectedTube == transFrom) {
+      textSize(30);
+      fill(0);
+      text("Please click to select a tube to transfer into.", 20, 40);
     }
   } else if (key == 'f') {
     MODE = FILL;
