@@ -23,13 +23,10 @@ public class Tester{
     }
   }
   public static boolean isPossible(Tube one, Tube two, int numBalls){
-    if (numBalls%euclid(one.capacity,two.capacity)==0){
-      return true;
-    }
-    return false;
+    return (numBalls%euclid(one.capacity,two.capacity)==0)
   }
   public static void solve(Tube one, Tube two,int numbBalls){
-    if (isPossible(one,two,numBalls))
+    if (isPossible(one,two,numBalls)){
       Tube greater=one;
       Tube lesser=two;
       if (one.capacity<two.capacity){
@@ -45,4 +42,4 @@ public class Tester{
         solve(greater,lesser);
       }
     }
-}
+}}

@@ -139,3 +139,33 @@ void drawEmptier() {
   textSize(17);
   text("empty", width - 115, 120);
 }
+
+public static int euclid(int a, int b){
+    if (b==0){
+      return a;
+    }
+    else{
+      return euclid(b,a%b);
+    }
+  }
+  public static boolean isPossible(Tube one, Tube two, int numBalls){
+    return (numBalls%euclid(one.capacity,two.capacity)==0);
+  }
+  public static void solve(Tube one, Tube two,int numbBalls){
+    if (isPossible(one,two,numbBalls)){
+      Tube greater=one;
+      Tube lesser=two;
+      if (one.capacity<two.capacity){
+        greater=two;
+        lesser=one;
+      }
+      fillStation.fill(greater);
+      greater.transfer(lesser);
+      if (two.numBalls==two.capacity){
+        emptyStation.empty(lesser);
+      }
+      if (greater.numBalls!=numbBalls && lesser.numBalls!=numbBalls){
+        solve(greater,lesser,numbBalls);
+      }
+    }
+}
