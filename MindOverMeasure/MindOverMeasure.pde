@@ -25,8 +25,7 @@ void draw() {
     if (MODE == TRANSFER) {
       textSize(30);
       fill(0);
-      text("Select tube to transfer from.", 20, 100);
-      
+      text("Select tube to transfer from.", 20, 40);
     }
   }
 }
@@ -34,16 +33,39 @@ void draw() {
 void keyPressed() {
   if (key == 't') {
     MODE = TRANSFER;
+    int transFrom = 0;
+    int transTo = 10;
+    textSize(30);
+    fill(0);
+    text("Please click to select a tube to transfer from.", 20, 40);
+    if (mousePressed) {
+      transFrom = selectedTube;
+    }
+    textSize(30);
+    fill(0);
+    text("Please click to select a tube to transfer to.", 20, 40);
+    if (mousePressed && selectedTube != transFrom) {
+      transTo = selectedTube;
+    }
   } else if (key == 'f') {
     MODE = FILL;
   } else if (key == 'e') {
     MODE = EMPTY;
   } else {
-    println("Please select a valid key option");
+    textSize(30);
+    fill(0);
+    text("Please select a valid key option.", 20, 40);
   }
 }
 
 void mouseClicked() {
+  if (get(mouseX, mouseY) == 255) {
+    selectedTube = (mouseX / 80);
+  } else {
+    textSize(30);
+    fill(0);
+    text("Please click again to select a tube.", 20, 40);
+  }
 }
 
 Tube randomizeTube() {
