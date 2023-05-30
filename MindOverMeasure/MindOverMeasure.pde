@@ -153,7 +153,7 @@ public static int euclid(int a, int b){
   public static boolean isPossible(Tube one, Tube two, int numBalls){
     return (numBalls%euclid(one.capacity,two.capacity)==0);
   }
-  public static void solve(Tube one, Tube two,int numbBalls){
+  /*public static void solve(Tube one, Tube two,int numbBalls){
     if (isPossible(one,two,numbBalls)){
       Tube greater=one;
       Tube lesser=two;
@@ -169,5 +169,5 @@ public static int euclid(int a, int b){
       if (greater.numBalls!=numbBalls && lesser.numBalls!=numbBalls){
         solve(greater,lesser,numbBalls);
       }
-    }
+    }*/
 }
