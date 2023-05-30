@@ -4,6 +4,12 @@ Tube fillStation;
 Tube emptyStation;
 Tube randTube1;
 Tube randTube2;
+static int numSelect = 0;
+static int TRANSFER = 1;
+int selectedTube;
+static int FILL = 2;
+static int EMPTY = 3;
+static int MODE = numSelect;
 
 void setup() {
   size(900, 600);
@@ -15,9 +21,26 @@ void setup() {
 }
 
 void draw() {
+  if (keyPressed) {
+    if (MODE == TRANSFER) {
+      textSize(30);
+      fill(0);
+      text("Select tube to transfer from.", 20, 100);
+      
+    }
+  }
 }
 
 void keyPressed() {
+  if (key == 't') {
+    MODE = TRANSFER;
+  } else if (key == 'f') {
+    MODE = FILL;
+  } else if (key == 'e') {
+    MODE = EMPTY;
+  } else {
+    println("Please select a valid key option");
+  }
 }
 
 void mouseClicked() {
