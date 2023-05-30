@@ -16,8 +16,10 @@ Finished solve. Added two helper methods, one that finds the GCD of two numbers 
 info
 
 ## 5/29/23
-Added solve onto processing, and made necessary changes for it to work there. 
+Added solve onto processing, and made necessary changes for it to work there.
 
+## 5/30/23
+Worked on fixing merge conflicts and discussed future of project in class. 
 
 ## Ramisa Haque
 
@@ -29,3 +31,7 @@ Wrote empty() and fill methods for the Tube class.
 Wrote an outline for the Mind Over Measure class (with methods); paper diagrams to design the specific aspects.
 ### 5/25/23
 Wrote randomizeTube method, wrote methods to account for the differences in drawing of capped tubes, empty station (tube obj), and fill station (also tube obj).
+### 5/26/23
+Implemented the visual aspects of transfer, empty, and fill to allow user the updated state of the game per time.
+### 5/27/23 - 5/29/23
+Added states to keep track of user decisions; implemented keyPressed() to use user input accordingly. Added text prompts to guide user (including invalid input). Implemented mouseClicked() to determine user input and included data to enhance features of keyPressed().
