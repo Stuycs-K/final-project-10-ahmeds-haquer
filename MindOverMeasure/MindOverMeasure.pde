@@ -1,4 +1,4 @@
-import java.util.*;
+import java.util.*; //<>//
 int chosenNum;
 Tube fillStation;
 Tube emptyStation;
@@ -33,41 +33,56 @@ void draw() {
 }
 
 void keyPressed() {
+  // remove and separate all of mouse pressed code
   if (key == 't') {
+    //println(key);
     MODE = TRANSFER;
     textSize(30);
     fill(0);
-    text("Select tube to transfer from.", 20, 40);
-    textSize(30);
-    fill(0);
-    text("Please click to select a tube to transfer from.", 20, 40);
-    if (mousePressed) {
-      while (tempSelectedTube != randTube1.capacity && tempSelectedTube != randTube2.capacity) {
-        text("Please click to select a tube to transfer from.", 20, 40);
-      }
-      TselectedTube1 = tempSelectedTube;
+    int time = millis();
+    if (millis() < time + 50000) {
+      text("Select tube to transfer from.", 20, 40);
     }
-    textSize(30);
-    fill(0);
-    text("Please click to select a tube to transfer into.", 20, 40);
-    if (mousePressed && tempSelectedTube != TselectedTube1 && (tempSelectedTube == randTube1.capacity || tempSelectedTube == randTube2.capacity)) {
-      TselectedTube2 = tempSelectedTube;
-    }
+
+    /*if (mousePressed) {
+     while (tempSelectedTube != randTube1.capacity && tempSelectedTube != randTube2.capacity) {
+     text("Please click to select a tube to transfer from.", 20, 40);
+     }
+     TselectedTube1 = tempSelectedTube;
+     }
+     textSize(30);
+     fill(0);
+     text("Please click to select a tube to transfer into.", 20, 40);
+     if (mousePressed && tempSelectedTube != TselectedTube1 && (tempSelectedTube == randTube1.capacity || tempSelectedTube == randTube2.capacity)) {
+     TselectedTube2 = tempSelectedTube;
+     }
+     */
+    /*
     while (tempSelectedTube == TselectedTube1) {
-      textSize(30);
-      fill(0);
-      text("Please click to select a tube to transfer into.", 20, 40);
-      while (TselectedTube2 == 0) {
-        if (mousePressed && tempSelectedTube != TselectedTube1 && (tempSelectedTube == randTube1.capacity || tempSelectedTube == randTube2.capacity)) {
-          TselectedTube2 = tempSelectedTube;
-        }
-      }
-    }
-  } else if (key == 'f') {
+     textSize(30);
+     fill(0);
+     text("Please click to select a tube to transfer into.", 20, 40);
+     while (TselectedTube2 == 0) {
+     if (mousePressed && tempSelectedTube != TselectedTube1 && (tempSelectedTube == randTube1.capacity || tempSelectedTube == randTube2.capacity)) {
+     TselectedTube2 = tempSelectedTube;
+     }
+     }
+     */
+  }
+
+  if (key == 'f') {
     MODE = FILL;
-  } else if (key == 'e') {
+    textSize(30);
+    fill(0);
+    int time = millis();
+    if (millis() < time + 50000) {
+      text("Select tube to fill.", 20, 40);
+    }
+  }
+  if (key == 'e') {
     MODE = EMPTY;
-  } else {
+  }
+  if (key != 't' && key != 'f' && key != 'e') {
     textSize(30);
     fill(0);
     text("Please select a valid key option.", 20, 40);
@@ -75,14 +90,60 @@ void keyPressed() {
   }
 }
 
-void mouseClicked() {
-  if (get(mouseX, mouseY) == 255) {
+void mousePressed() {
+  color col = get(mouseX, mouseY);
+  //println(col);
+  if (col == -1) {
     tempSelectedTube = (mouseX / 80);
+    //println(tempSelectedTube);
   } else {
     textSize(30);
     fill(0);
-    text("Please click again to select a tube.", 20, 40);
-    delay(3000);
+    text("Please click again to select a valid tube.", 20, 40);
+    delay(10);
+  }
+  if (MODE == TRANSFER) {
+    if (TselectedTube1 == 0) {
+      if (tempSelectedTube != randTube1.capacity && tempSelectedTube != randTube2.capacity) {
+        text("Please click to select a tube to transfer from.", 20, 40);
+      } else {
+        TselectedTube1 = tempSelectedTube;
+      }
+    }
+    if (TselectedTube2 == 0) {
+      if (tempSelectedTube != randTube1.capacity && tempSelectedTube != randTube2.capacity) {
+        text("Please click to select a tube to transfer from.", 20, 40);
+      } else {
+        TselectedTube2 = tempSelectedTube;
+      }
+    }
+    if (TselectedTube1 == randTube1.capacity) {
+      randTube1.transfer(randTube2);
+    } else if (TselectedTube1 == randTube2.capacity) {
+      randTube2.transfer(randTube1);
+    }
+    MODE = noState;
+  }
+  if (MODE == FILL) {
+    println(fillStation.numBalls);
+    println(fillStation.toString());
+    fillStation.remove(fillStation, 2);
+    println(fillStation.numBalls);
+    println(fillStation.toString());
+    if (tempSelectedTube != randTube1.capacity || tempSelectedTube != randTube2.capacity) {
+      textSize(30);
+      fill(0);
+      text("Please click again to select a valid tube.", 20, 40);
+      delay(3000);
+    } else {
+      FselectedTube = tempSelectedTube;
+      if (FselectedTube == randTube1.capacity) {
+        randTube1.fill(fillStation);
+        
+      } else if (FselectedTube == randTube2.capacity) {
+        randTube2.fill(fillStation);
+      }
+    }
   }
 }
 
