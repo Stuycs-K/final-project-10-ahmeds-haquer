@@ -14,7 +14,7 @@ static int MODE = numSelect;
 void setup() {
   size(900, 600);
   frameRate(10);
-  randTube1 = new Tube(3); //<>//
+  randTube1 = new Tube(3); //<>// //<>//
   randTube2 = new Tube(5);
   fillStation = new Tube();
   emptyStation = new Tube();
@@ -169,5 +169,5 @@ public static int euclid(int a, int b){
       if (greater.numBalls!=numbBalls && lesser.numBalls!=numbBalls){
         solve(greater,lesser,numbBalls);
       }
-    }*/
-}
+    }
+}*/
