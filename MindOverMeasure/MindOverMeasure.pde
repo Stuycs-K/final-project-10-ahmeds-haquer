@@ -14,20 +14,20 @@ int EselectedTube;
 static int FILL = 2;
 static int EMPTY = 3;
 static int noState = 4;
-static int MODE = numSelect; //<>//
+static int MODE = numSelect; //<>// //<>//
 
 void setup() {
   size(900, 600);
   frameRate(10);
-  randTube1 = new Tube(3); //<>// //<>//
-  randTube2 = new Tube(5);
+  randTube1 = randomizeTube(); //<>// //<>//
+  randTube2 = randomizeTube(randTube1.capacity);
   fillStation = new Tube();
   emptyStation = new Tube();
 }
 
 void draw() {
   background(#8AC4F0);
-  drawCapTubes();
+  drawTubes();
   drawFiller();
   drawEmptier();
 }
@@ -87,19 +87,18 @@ void mouseClicked() {
 }
 
 Tube randomizeTube() {
-  if (randTube1.capacity == 0) {
-    int rand = (int)(Math.random() * 7) + 2;
-    return new Tube(rand);
-  } else {
-    int rand = (int)(Math.random() * 7) + 2;
-    while (rand == randTube1.capacity) {
-      rand = (int)(Math.random() * 7) + 2;
-    }
-    return new Tube(rand);
+  int rand = (int)(Math.random() * 7) + 2;
+  return new Tube(rand);
   }
-}
 
-void drawCapTubes() {
+Tube randomizeTube(int number){
+  int rand = (int)(Math.random() * 7) + 2;
+  while (rand==number){
+    rand = (int)(Math.random() * 7) + 2;
+  }
+  return new Tube(rand); 
+}
+void drawTubes() {
   int tubeNum = 2;
   for (int i = 150; tubeNum <= 8; i+=80) {
     //figure out font stuff
