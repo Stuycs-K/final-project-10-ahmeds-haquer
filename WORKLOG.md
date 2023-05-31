@@ -16,8 +16,10 @@ Finished solve. Added two helper methods, one that finds the GCD of two numbers 
 info
 
 ## 5/29/23
-Added solve onto processing, and made necessary changes for it to work there. 
+Added solve onto processing, and made necessary changes for it to work there.
 
+## 5/30/23
+Worked on fixing merge conflicts and discussed future of project in class. 
 
 ## Ramisa Haque
 

@@ -6,15 +6,20 @@ Tube randTube1;
 Tube randTube2;
 static int numSelect = 0;
 static int TRANSFER = 1;
-int selectedTube;
+int tempSelectedTube;
+int TselectedTube1;
+int TselectedTube2;
+int FselectedTube;
+int EselectedTube;
 static int FILL = 2;
 static int EMPTY = 3;
-static int MODE = numSelect;
+static int noState = 4;
+static int MODE = numSelect; //<>//
 
 void setup() {
   size(900, 600);
   frameRate(10);
-  randTube1 = new Tube(3); //<>//
+  randTube1 = new Tube(3); //<>// //<>//
   randTube2 = new Tube(5);
   fillStation = new Tube();
   emptyStation = new Tube();
@@ -25,37 +30,38 @@ void draw() {
   drawCapTubes();
   drawFiller();
   drawEmptier();
-  
-  if (keyPressed) {
-    if (MODE == TRANSFER) {
-      textSize(30);
-      fill(0);
-      text("Select tube to transfer from.", 20, 40);
-    }
-  }
 }
 
 void keyPressed() {
   if (key == 't') {
     MODE = TRANSFER;
-    int transFrom = 0;
-    int transTo = 10;
+    textSize(30);
+    fill(0);
+    text("Select tube to transfer from.", 20, 40);
     textSize(30);
     fill(0);
     text("Please click to select a tube to transfer from.", 20, 40);
     if (mousePressed) {
-      transFrom = selectedTube;
+      while (tempSelectedTube != randTube1.capacity && tempSelectedTube != randTube2.capacity) {
+        text("Please click to select a tube to transfer from.", 20, 40);
+      }
+      TselectedTube1 = tempSelectedTube;
     }
     textSize(30);
     fill(0);
     text("Please click to select a tube to transfer into.", 20, 40);
-    if (mousePressed && selectedTube != transFrom) {
-      transTo = selectedTube;
+    if (mousePressed && tempSelectedTube != TselectedTube1 && (tempSelectedTube == randTube1.capacity || tempSelectedTube == randTube2.capacity)) {
+      TselectedTube2 = tempSelectedTube;
     }
-    while (selectedTube == transFrom) {
+    while (tempSelectedTube == TselectedTube1) {
       textSize(30);
       fill(0);
       text("Please click to select a tube to transfer into.", 20, 40);
+      while (TselectedTube2 == 0) {
+        if (mousePressed && tempSelectedTube != TselectedTube1 && (tempSelectedTube == randTube1.capacity || tempSelectedTube == randTube2.capacity)) {
+          TselectedTube2 = tempSelectedTube;
+        }
+      }
     }
   } else if (key == 'f') {
     MODE = FILL;
@@ -65,16 +71,18 @@ void keyPressed() {
     textSize(30);
     fill(0);
     text("Please select a valid key option.", 20, 40);
+    delay(5000);
   }
 }
 
 void mouseClicked() {
   if (get(mouseX, mouseY) == 255) {
-    selectedTube = (mouseX / 80);
+    tempSelectedTube = (mouseX / 80);
   } else {
     textSize(30);
     fill(0);
     text("Please click again to select a tube.", 20, 40);
+    delay(3000);
   }
 }
 
@@ -142,32 +150,31 @@ void drawEmptier() {
   text("empty", width - 115, 120);
 }
 
-public static int euclid(int a, int b){
-    if (b==0){
-      return a;
-    }
-    else{
-      return euclid(b,a%b);
-    }
+public static int euclid(int a, int b) {
+  if (b==0) {
+    return a;
+  } else {
+    return euclid(b, a%b);
   }
-  public static boolean isPossible(Tube one, Tube two, int numBalls){
-    return (numBalls%euclid(one.capacity,two.capacity)==0);
-  }
-  public static void solve(Tube one, Tube two,int numbBalls){
-    if (isPossible(one,two,numbBalls)){
-      Tube greater=one;
-      Tube lesser=two;
-      if (one.capacity<two.capacity){
-        greater=two;
-        lesser=one;
-      }
-      fillStation.fill(greater);
-      greater.transfer(lesser);
-      if (two.numBalls==two.capacity){
-        emptyStation.empty(lesser);
-      }
-      if (greater.numBalls!=numbBalls && lesser.numBalls!=numbBalls){
-        solve(greater,lesser,numbBalls);
-      }
-    }
 }
+public static boolean isPossible(Tube one, Tube two, int numBalls) {
+  return (numBalls%euclid(one.capacity, two.capacity)==0);
+}
+/*public static void solve(Tube one, Tube two,int numbBalls){
+ if (isPossible(one,two,numbBalls)){
+ Tube greater=one;
+ Tube lesser=two;
+ if (one.capacity<two.capacity){
+ greater=two;
+ lesser=one;
+ }
+ fillStation.fill(greater);
+ greater.transfer(lesser);
+ if (two.numBalls==two.capacity){
+ emptyStation.empty(lesser);
+ }
+ if (greater.numBalls!=numbBalls && lesser.numBalls!=numbBalls){
+ solve(greater,lesser,numbBalls);
+ }
+ }
+ }*/
