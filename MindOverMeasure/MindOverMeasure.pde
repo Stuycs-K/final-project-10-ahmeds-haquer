@@ -14,7 +14,13 @@ int EselectedTube;
 static int FILL = 2;
 static int EMPTY = 3;
 static int noState = 4;
+<<<<<<< HEAD
 static int MODE = numSelect; //<>// //<>// //<>// //<>//
+=======
+static int MODE = numSelect; //<>// //<>// //<>// //<>// //<>//
+boolean transferFrom;
+boolean transferInto;
+>>>>>>> 318c5c080b96e6ab72fbb807939121fea27db3ad
 
 void setup() {
   size(900, 600);
@@ -24,6 +30,7 @@ void setup() {
 
   fillStation = new Tube();
   emptyStation = new Tube();
+  emptyStation.numBalls = 0;
 }
 
 void draw() {
@@ -56,12 +63,12 @@ void draw() {
     textSize(15);
     fill(0);
     text("MODE: TRANSFER", 700, 560);
-    if (TselectedTube1 == 0) {
+    if (!transferFrom) {
       textSize(25);
       fill(0);
       text("Select tube to transfer from.", 20, 40);
     }
-    if (TselectedTube2 == 0) {
+    if (transferFrom && !transferInto) {
       textSize(25);
       fill(0);
       text("Select tube to transfer into.", 20, 40);
@@ -80,7 +87,7 @@ void draw() {
   }
 }
 
-void keyPressed() {
+void keyTyped() {
   // remove and separate all of mouse pressed code
   if (keyPressed) {
     if ((key == '1' || key == '2' || key == '3' || key == '4' || key == '5' || key == '6' || key == '7') && MODE == numSelect) {
@@ -113,26 +120,28 @@ void mousePressed() {
     delay(10);
   }
   if (MODE == TRANSFER) {
-    if (TselectedTube1 == 0) {
-      if (tempSelectedTube != randTube1.capacity && tempSelectedTube != randTube2.capacity) {
-        text("Please click to select a tube to transfer from.", 20, 40);
-      } else {
-        TselectedTube1 = tempSelectedTube;
-      }
-    }
-    if (TselectedTube2 == 0) {
-      if (tempSelectedTube != randTube1.capacity && tempSelectedTube != randTube2.capacity) {
-        text("Please click to select a tube to transfer from.", 20, 40);
-      } else {
-        TselectedTube2 = tempSelectedTube;
-      }
+    if (!transferFrom) {
+      TselectedTube1 = tempSelectedTube;
+      transferFrom = true;
+    } else if (transferFrom && !transferInto) {
+      TselectedTube2 = tempSelectedTube;
+      transferInto = true;
     }
     if (TselectedTube1 == randTube1.capacity) {
       randTube1.transfer(randTube2);
+      transferFrom = false;
+      transferInto = false;
+      //MODE = noState;
     } else if (TselectedTube1 == randTube2.capacity) {
       randTube2.transfer(randTube1);
+      transferFrom = false;
+      transferInto = false;
+      //MODE = noState;
     }
+<<<<<<< HEAD
     MODE = noState;
+=======
+>>>>>>> 318c5c080b96e6ab72fbb807939121fea27db3ad
   }
   if (MODE == FILL) {
     /*
@@ -166,9 +175,9 @@ void mousePressed() {
     } else {
       FselectedTube = tempSelectedTube;
       if (FselectedTube == randTube1.capacity) {
-        fillStation.empty(randTube1);
+        emptyStation.empty(randTube1);
       } else if (FselectedTube == randTube2.capacity) {
-        fillStation.empty(randTube2);
+        emptyStation.empty(randTube2);
       }
     }
   }
@@ -213,23 +222,24 @@ void drawCapTubes() {
     textSize(30);
     fill(0);
     text(""+ tubeNum, i + 20, 180);
-    tubeNum++;
+
     //draw balls
     if (randTube1 != null) {
       if (tubeNum == randTube1.capacity) {
-        for (int j = 0; j < randTube1.numBalls; j++) {
+        for (int j = randTube1.numBalls; j > 0; j--) {
           fill(255);
-          circle(i, y, 45);
-          y -= 45;
+          circle(i+26, y+125, 35);
+          y -= 35;
         }
       } else if (tubeNum == randTube2.capacity) {
-        for (int j = 0; j < randTube2.numBalls; j++) {
+        for (int j = randTube2.numBalls; j > 0; j--) {
           fill(255);
-          circle(i, y, 45);
-          y -= 45;
+          circle(i+26, y+125, 35);
+          y -= 35;
         }
       }
     }
+    tubeNum++;
   }
 }
 
@@ -240,6 +250,14 @@ void drawFiller() {
   fill(0);
   textSize(17);
   text("fill", width - 165, 120);
+  int y = 400;
+  if (fillStation != null) {
+    for (int j = fillStation.numBalls; j > 0; j--) {
+      fill(255);
+      circle(width-155, y+107, 25);
+      y -= 25;
+    }
+  }
 }
 
 void drawEmptier() {
@@ -249,6 +267,14 @@ void drawEmptier() {
   fill(0);
   textSize(17);
   text("empty", width - 115, 120);
+  int y = 400;
+  if (emptyStation != null) {
+    for (int j = emptyStation.numBalls; j > 0; j--) {
+      fill(255);
+      circle(width-93, y+107, 25);
+      y -= 25;
+    }
+  }
 }
 
 public static int euclid(int a, int b) {
