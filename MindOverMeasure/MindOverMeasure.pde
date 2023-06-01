@@ -24,6 +24,7 @@ void setup() {
 
   fillStation = new Tube();
   emptyStation = new Tube();
+  emptyStation.numBalls = 0;
 }
 
 void draw() {
@@ -170,9 +171,9 @@ void mousePressed() {
     } else {
       FselectedTube = tempSelectedTube;
       if (FselectedTube == randTube1.capacity) {
-        fillStation.empty(randTube1);
+        emptyStation.empty(randTube1);
       } else if (FselectedTube == randTube2.capacity) {
-        fillStation.empty(randTube2);
+        emptyStation.empty(randTube2);
       }
     }
   }
@@ -217,7 +218,7 @@ void drawCapTubes() {
     textSize(30);
     fill(0);
     text(""+ tubeNum, i + 20, 180);
-    
+
     //draw balls
     if (randTube1 != null) {
       if (tubeNum == randTube1.capacity) {
@@ -236,7 +237,6 @@ void drawCapTubes() {
     }
     tubeNum++;
   }
-  
 }
 
 void drawFiller() {
@@ -246,6 +246,14 @@ void drawFiller() {
   fill(0);
   textSize(17);
   text("fill", width - 165, 120);
+  int y = 400;
+  if (fillStation != null) {
+    for (int j = fillStation.numBalls; j > 0; j--) {
+      fill(255);
+      circle(width-155, y+107, 25);
+      y -= 25;
+    }
+  }
 }
 
 void drawEmptier() {
@@ -255,6 +263,14 @@ void drawEmptier() {
   fill(0);
   textSize(17);
   text("empty", width - 115, 120);
+  int y = 400;
+  if (emptyStation != null) {
+    for (int j = emptyStation.numBalls; j > 0; j--) {
+      fill(255);
+      circle(width-93, y+107, 25);
+      y -= 25;
+    }
+  }
 }
 
 public static int euclid(int a, int b) {
