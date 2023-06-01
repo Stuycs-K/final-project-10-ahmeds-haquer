@@ -14,9 +14,13 @@ int EselectedTube;
 static int FILL = 2;
 static int EMPTY = 3;
 static int noState = 4;
+<<<<<<< HEAD
+static int MODE = numSelect; //<>// //<>// //<>// //<>//
+=======
 static int MODE = numSelect; //<>// //<>// //<>// //<>// //<>//
 boolean transferFrom;
 boolean transferInto;
+>>>>>>> 318c5c080b96e6ab72fbb807939121fea27db3ad
 
 void setup() {
   size(900, 600);
@@ -134,6 +138,10 @@ void mousePressed() {
       transferInto = false;
       //MODE = noState;
     }
+<<<<<<< HEAD
+    MODE = noState;
+=======
+>>>>>>> 318c5c080b96e6ab72fbb807939121fea27db3ad
   }
   if (MODE == FILL) {
     /*
