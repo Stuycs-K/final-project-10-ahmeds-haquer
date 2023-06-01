@@ -15,6 +15,8 @@ static int FILL = 2;
 static int EMPTY = 3;
 static int noState = 4;
 static int MODE = numSelect; //<>// //<>// //<>// //<>//
+boolean transferFrom;
+boolean transferInto;
 
 void setup() {
   size(900, 600);
@@ -57,12 +59,12 @@ void draw() {
     textSize(15);
     fill(0);
     text("MODE: TRANSFER", 700, 560);
-    if (TselectedTube1 == 0) {
+    if (!transferFrom) {
       textSize(25);
       fill(0);
       text("Select tube to transfer from.", 20, 40);
     }
-    if (TselectedTube2 == 0) {
+    if (transferFrom && !transferInto) {
       textSize(25);
       fill(0);
       text("Select tube to transfer into.", 20, 40);
@@ -114,30 +116,24 @@ void mousePressed() {
     delay(10);
   }
   if (MODE == TRANSFER) {
-    if (TselectedTube1 == 0) {
-      if (tempSelectedTube != randTube1.capacity && tempSelectedTube != randTube2.capacity) {
-        textSize(30);
-        fill(0);
-        text("Please click to select a tube to transfer from.", 20, 40);
-      } else {
-        TselectedTube1 = tempSelectedTube;
-      }
-    }
-    if (TselectedTube2 == 0) {
-      if (tempSelectedTube != randTube1.capacity && tempSelectedTube != randTube2.capacity) {
-        textSize(30);
-        fill(0);
-        text("Please click to select a tube to transfer to.", 20, 40);
-      } else {
-        TselectedTube2 = tempSelectedTube;
-      }
+    if (!transferFrom) {
+      TselectedTube1 = tempSelectedTube;
+      transferFrom = true;
+    } else if (transferFrom && !transferInto) {
+      TselectedTube2 = tempSelectedTube;
+      transferInto = true;
     }
     if (TselectedTube1 == randTube1.capacity) {
       randTube1.transfer(randTube2);
+      transferFrom = false;
+      transferInto = false;
+      //MODE = noState;
     } else if (TselectedTube1 == randTube2.capacity) {
       randTube2.transfer(randTube1);
+      transferFrom = false;
+      transferInto = false;
+      //MODE = noState;
     }
-    MODE = noState;
   }
   if (MODE == FILL) {
     /*
