@@ -30,9 +30,9 @@ void draw() {
   background(#8AC4F0);
   textSize(20);
   fill(0);
-  text("MODE: " + MODE, 800, 560);
 
   if (MODE == numSelect) {
+    text("MODE: Select number", 700, 560);
     drawNumSelect();
   }
   if (MODE != numSelect) {
@@ -45,18 +45,22 @@ void draw() {
     drawEmptier();
   }
 
-
   if (MODE == TRANSFER) {
+    text("MODE: TRANSFER", 700, 560);
     while (TselectedTube1 == 0) {
-      textSize(30);
+      textSize(25);
       fill(0);
       text("Select tube to transfer from.", 20, 40);
     }
     while (TselectedTube2 == 0) {
-      textSize(30);
+      textSize(25);
       fill(0);
       text("Select tube to transfer into.", 20, 40);
     }
+  }
+
+  if (MODE == FILL) {
+    text("MODE: FILL" , 700, 560);
   }
 }
 
@@ -65,29 +69,17 @@ void keyPressed() {
   if (key == '1' || key == '2' || key == '3' || key == '4' || key == '5' || key == '6' || key == '7' ) {
     chosenNum = Character.getNumericValue(key);
     MODE = noState;
-  }
-  else if (key == 't' || key == 'T') {
-    //println(key);
+  } else if (key == 't' || key == 'T') {
     MODE = TRANSFER;
-  }
-
-  else if (key == 'f' || key == 'F') {
+  } else if (key == 'f' || key == 'F') {
     MODE = FILL;
-    textSize(30);
-    fill(0);
-    int time = millis();
-    if (millis() < time + 50000) {
-      text("Select tube to fill.", 20, 40);
-    }
-  }
-  else if (key == 'e'  || key == 'E') {
+  } else if (key == 'e'  || key == 'E') {
     MODE = EMPTY;
-  }
-  else {
+  } else {
     textSize(30);
     fill(0);
     text("Please select a valid key option.", 20, 40);
-    delay(5000);
+    delay(50);
   }
 }
 
