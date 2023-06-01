@@ -1,20 +1,35 @@
 public class Tester{
   public static void main (String[] args){
     Tube filler= new Tube();
-    Tube test= new Tube(8);
-    Tube test2= new Tube(7);
+    Tube test= new Tube(2);
+    Tube test2= new Tube(3);
     filler.fill(test);
+    System.out.println(filler);
+    filler.empty(test);
+    System.out.println(filler);
+    filler.fill(test);
+    System.out.println("-");
     System.out.println(test);
+    System.out.println(test2);
     test.transfer(test2);
     System.out.println(test);
     System.out.println(test2);
-    filler.empty(test);
-    filler.empty(test2);
+    test2.transfer(test);
     System.out.println(test);
     System.out.println(test2);
-    System.out.println(euclid(15,35));
+    filler.fill(test2);
+    test2.transfer(test);
+    System.out.println(test);
+    System.out.println(test2);
+    filler.empty(test);
+    test2.transfer(test);
+    System.out.println(test);
+    System.out.println(test2);
+
+
+    //System.out.println(euclid(15,35));
   }
-  public static int euclid(int a, int b){
+  /*public static int euclid(int a, int b){
     if (b==0){
       return a;
     }
@@ -42,4 +57,4 @@ public class Tester{
         solve(greater,lesser);
       }
     }
-}}
+}*/}

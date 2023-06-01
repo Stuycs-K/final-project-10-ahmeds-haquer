@@ -6,6 +6,9 @@ public class Tube {
 
   public Tube(){// for tube that fills it up
       tube= new int[15];
+      for (int i=0;i<15;i++){
+        tube[i]=1;
+      }
       capacity=15;
       numBalls=15;
   }
@@ -27,17 +30,26 @@ public class Tube {
     }
     return result;
   }
+  private void fillSpot (int index){
+    tube[index]=1;
+    numBalls++;
+  }
+
+  private void removeSpot (int index){
+    tube[index]=0;
+    numBalls--;
+  }
   public  void remove (int[] holder,int quantity){
      for (int i=0;i<quantity&&numBalls>0;i++){
        holder[numBalls-1]=0;
        numBalls--;
      }
   }
-  public  void remove (Tube holder,int quantity){
+  public  void remove (int quantity,Tube holder){
      for (int i=0;i<quantity&&holder.numBalls>0;i++){
-       holder.tube[holder.numBalls-1]=0;
-       holder.numBalls--;
+       holder.removeSpot(holder.numBalls-1);
      }
+
   }
   public void add (int[] holder,int quantity){
     for (int i=0;i<quantity&&numBalls<capacity;i++){
@@ -45,29 +57,28 @@ public class Tube {
        numBalls++;
      }
   }
-  public void add (Tube holder,int quantity){
-    for (int i=0;i<quantity&&holder.numBalls<capacity;i++){
-       holder.tube[holder.numBalls]=1;
-       holder.numBalls++;
+  public void add (int quantity, Tube holder){
+    for (int i=0;i<quantity&&holder.numBalls<holder.capacity;i++){
+       holder.fillSpot(holder.numBalls);;
      }
   }
 
   public  void fill (Tube filled){
      remove(tube,filled.capacity-filled.numBalls);
-     add(filled,filled.capacity-filled.numBalls);
+     add(filled.capacity-filled.numBalls,filled);
   }
   public  void empty(Tube emptied){
     add(tube,emptied.numBalls);
-    remove(emptied, emptied.numBalls);
+    remove(emptied.numBalls,emptied);
  }
    public  void transfer (Tube transferred){
      if (numBalls>=transferred.capacity-transferred.numBalls){
-     remove(tube,transferred.capacity-transferred.numBalls);
-     add(transferred,transferred.capacity-transferred.numBalls);
+       remove(tube,transferred.capacity-transferred.numBalls);
+       add(transferred.capacity-transferred.numBalls,transferred);
    }
    else{
      remove(tube,numBalls);
-     add(transferred,numBalls);
+     add(capacity,transferred);
    }
  }
 }

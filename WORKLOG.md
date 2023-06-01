@@ -21,6 +21,8 @@ Added solve onto processing, and made necessary changes for it to work there.
 ## 5/30/23
 Worked on fixing merge conflicts and discussed future of project in class.
 
+## 5/31/23
+Fixed merge conflicts, fixed the transfer method in the Tube class along with fill and empty. Fixed a few bugs to allow for the screen to display. Was absent today so did all of the work in one sitting.
 ## Ramisa Haque
 
 ### 5/22/23
