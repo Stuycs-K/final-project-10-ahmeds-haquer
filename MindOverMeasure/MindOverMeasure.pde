@@ -32,6 +32,8 @@ void draw() {
   fill(0);
 
   if (MODE == numSelect) {
+    textSize(15);
+    fill(0);
     text("MODE: Select number", 700, 560);
     drawNumSelect();
   }
@@ -45,7 +47,15 @@ void draw() {
     drawEmptier();
   }
 
+  if (MODE == noState) {
+    textSize(15);
+    fill(0);
+    text("choose an action", 700, 560);
+  }
+
   if (MODE == TRANSFER) {
+    textSize(15);
+    fill(0);
     text("MODE: TRANSFER", 700, 560);
     while (TselectedTube1 == 0) {
       textSize(25);
@@ -60,7 +70,9 @@ void draw() {
   }
 
   if (MODE == FILL) {
-    text("MODE: FILL" , 700, 560);
+    textSize(15);
+    fill(0);
+    text("MODE: FILL", 700, 560);
   }
 }
 
