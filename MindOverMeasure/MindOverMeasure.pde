@@ -14,7 +14,7 @@ int EselectedTube;
 static int FILL = 2;
 static int EMPTY = 3;
 static int noState = 4;
-static int MODE = numSelect; //<>// //<>// //<>//
+static int MODE = numSelect; //<>// //<>// //<>// //<>//
 
 void setup() {
   size(900, 600);
@@ -82,22 +82,22 @@ void draw() {
 
 void keyPressed() {
   // remove and separate all of mouse pressed code
-  if (keyPressed){
-  if ((key == '1' || key == '2' || key == '3' || key == '4' || key == '5' || key == '6' || key == '7') && MODE == numSelect) {
-    chosenNum = Character.getNumericValue(key);
-    MODE = noState;
-  } else if (key == 't' || key == 'T') {
-    MODE = TRANSFER;
-  } else if (key == 'f' || key == 'F') {
-    MODE = FILL;
-  } else if (key == 'e'  || key == 'E') {
-    MODE = EMPTY;
-  } else {
-    textSize(30);
-    fill(0);
-    text("Please select a valid key option.", 20, 40);
+  if (keyPressed) {
+    if ((key == '1' || key == '2' || key == '3' || key == '4' || key == '5' || key == '6' || key == '7') && MODE == numSelect) {
+      chosenNum = Character.getNumericValue(key);
+      MODE = noState;
+    } else if (key == 't' || key == 'T') {
+      MODE = TRANSFER;
+    } else if (key == 'f' || key == 'F') {
+      MODE = FILL;
+    } else if (key == 'e'  || key == 'E') {
+      MODE = EMPTY;
+    } else {
+      textSize(30);
+      fill(0);
+      text("Please select a valid key option.", 20, 40);
+    }
   }
-}
 }
 
 void mousePressed() {
@@ -132,7 +132,7 @@ void mousePressed() {
     } else if (TselectedTube1 == randTube2.capacity) {
       randTube2.transfer(randTube1);
     }
-   MODE = noState;
+    MODE = noState;
   }
   if (MODE == FILL) {
     /*
@@ -158,7 +158,7 @@ void mousePressed() {
       }
     }
   }
-  if (MODE==EMPTY){
+  if (MODE==EMPTY) {
     if (tempSelectedTube != randTube1.capacity && tempSelectedTube != randTube2.capacity) {
       textSize(30);
       fill(0);
