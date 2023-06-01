@@ -145,7 +145,7 @@ void mousePressed() {
      fillStation.fill(tester);
      println(tester.toString());
      */
-    if (tempSelectedTube != randTube1.capacity || tempSelectedTube != randTube2.capacity) {
+    if (tempSelectedTube != randTube1.capacity && tempSelectedTube != randTube2.capacity) {
       textSize(30);
       fill(0);
       text("Please click again to select a valid tube.", 20, 40);
