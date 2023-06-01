@@ -158,6 +158,20 @@ void mousePressed() {
       }
     }
   }
+  if (MODE==EMPTY){
+    if (tempSelectedTube != randTube1.capacity && tempSelectedTube != randTube2.capacity) {
+      textSize(30);
+      fill(0);
+      text("Please click again to select a valid tube.", 20, 40);
+    } else {
+      FselectedTube = tempSelectedTube;
+      if (FselectedTube == randTube1.capacity) {
+        fillStation.empty(randTube1);
+      } else if (FselectedTube == randTube2.capacity) {
+        fillStation.empty(randTube2);
+      }
+    }
+  }
 }
 
 Tube randomizeTube() {
