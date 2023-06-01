@@ -78,7 +78,7 @@ void draw() {
 
 void keyPressed() {
   // remove and separate all of mouse pressed code
-  if (key == '1' || key == '2' || key == '3' || key == '4' || key == '5' || key == '6' || key == '7' ) {
+  if ((key == '1' || key == '2' || key == '3' || key == '4' || key == '5' || key == '6' || key == '7') && MODE == numSelect) {
     chosenNum = Character.getNumericValue(key);
     MODE = noState;
   } else if (key == 't' || key == 'T') {
