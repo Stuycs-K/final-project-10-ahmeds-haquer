@@ -14,7 +14,7 @@ int EselectedTube;
 static int FILL = 2;
 static int EMPTY = 3;
 static int noState = 4;
-static int MODE = numSelect; //<>//
+static int MODE = numSelect; //<>// //<>// //<>//
 
 void setup() {
   size(900, 600);
@@ -30,7 +30,6 @@ void draw() {
   background(#8AC4F0);
   textSize(20);
   fill(0);
-
   if (MODE == numSelect) {
     textSize(15);
     fill(0);
@@ -57,12 +56,12 @@ void draw() {
     textSize(15);
     fill(0);
     text("MODE: TRANSFER", 700, 560);
-    while (TselectedTube1 == 0) {
+    if (TselectedTube1 == 0) {
       textSize(25);
       fill(0);
       text("Select tube to transfer from.", 20, 40);
     }
-    while (TselectedTube2 == 0) {
+    if (TselectedTube2 == 0) {
       textSize(25);
       fill(0);
       text("Select tube to transfer into.", 20, 40);
@@ -74,10 +73,16 @@ void draw() {
     fill(0);
     text("MODE: FILL", 700, 560);
   }
+  if (MODE == EMPTY) {
+    textSize(15);
+    fill(0);
+    text("MODE: EMPTY", 700, 560);
+  }
 }
 
 void keyTyped() {
   // remove and separate all of mouse pressed code
+  if (keyPressed){
   if ((key == '1' || key == '2' || key == '3' || key == '4' || key == '5' || key == '6' || key == '7') && MODE == numSelect) {
     chosenNum = Character.getNumericValue(key);
     MODE = noState;
@@ -92,6 +97,7 @@ void keyTyped() {
     fill(0);
     text("Please select a valid key option.", 20, 40);
   }
+}
 }
 
 void mousePressed() {
@@ -130,7 +136,7 @@ void mousePressed() {
     } else if (TselectedTube1 == randTube2.capacity) {
       randTube2.transfer(randTube1);
     }
-    MODE = noState;
+   MODE = noState;
   }
   if (MODE == FILL) {
     /*
@@ -143,7 +149,7 @@ void mousePressed() {
      fillStation.fill(tester);
      println(tester.toString());
      */
-    if (tempSelectedTube != randTube1.capacity || tempSelectedTube != randTube2.capacity) {
+    if (tempSelectedTube != randTube1.capacity && tempSelectedTube != randTube2.capacity) {
       textSize(30);
       fill(0);
       text("Please click again to select a valid tube.", 20, 40);
@@ -153,6 +159,20 @@ void mousePressed() {
         fillStation.fill(randTube1);
       } else if (FselectedTube == randTube2.capacity) {
         fillStation.fill(randTube2);
+      }
+    }
+  }
+  if (MODE==EMPTY){
+    if (tempSelectedTube != randTube1.capacity && tempSelectedTube != randTube2.capacity) {
+      textSize(30);
+      fill(0);
+      text("Please click again to select a valid tube.", 20, 40);
+    } else {
+      FselectedTube = tempSelectedTube;
+      if (FselectedTube == randTube1.capacity) {
+        fillStation.empty(randTube1);
+      } else if (FselectedTube == randTube2.capacity) {
+        fillStation.empty(randTube2);
       }
     }
   }
