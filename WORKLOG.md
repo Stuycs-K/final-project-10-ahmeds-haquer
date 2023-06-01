@@ -23,6 +23,9 @@ Worked on fixing merge conflicts and discussed future of project in class.
 
 ## 5/31/23
 Fixed merge conflicts, fixed the transfer method in the Tube class along with fill and empty. Fixed a few bugs to allow for the screen to display. Was absent today so did all of the work in one sitting.
+
+## 6/1/23
+I debugged transfer because there was a bug again because sometimes it transferred when it didn't have to. I added a VICTORY mode that resets the game. Also fixed the random  tube generator Played through the game one time and it worked. 
 ## Ramisa Haque
 
 ### 5/22/23
