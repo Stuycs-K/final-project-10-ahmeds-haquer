@@ -1,4 +1,4 @@
-import java.util.*; //<>// //<>//
+import java.util.*; //<>//
 int chosenNum;
 Tube fillStation;
 Tube emptyStation;
@@ -14,7 +14,7 @@ int EselectedTube;
 static int FILL = 2;
 static int EMPTY = 3;
 static int noState = 4;
-static int MODE = numSelect; //<>// //<>// //<>// //<>//
+static int MODE = numSelect; //<>// //<>// //<>// //<>// //<>//
 boolean transferFrom;
 boolean transferInto;
 
@@ -26,7 +26,7 @@ void setup() {
 
   fillStation = new Tube();
   emptyStation = new Tube();
-  emptyStation.numBalls =0;
+  emptyStation.numBalls = 0;
 }
 
 void draw() {
@@ -83,7 +83,7 @@ void draw() {
   }
 }
 
-void keyPressed() {
+void keyTyped() {
   // remove and separate all of mouse pressed code
   if (keyPressed) {
     if ((key == '1' || key == '2' || key == '3' || key == '4' || key == '5' || key == '6' || key == '7') && MODE == numSelect) {
@@ -127,12 +127,13 @@ void mousePressed() {
       randTube1.transfer(randTube2);
       transferFrom = false;
       transferInto = false;
+      //MODE = noState;
     } else if (TselectedTube1 == randTube2.capacity) {
       randTube2.transfer(randTube1);
       transferFrom = false;
       transferInto = false;
+      //MODE = noState;
     }
-    MODE = noState;
   }
   if (MODE == FILL) {
     /*
@@ -166,9 +167,9 @@ void mousePressed() {
     } else {
       FselectedTube = tempSelectedTube;
       if (FselectedTube == randTube1.capacity) {
-        fillStation.empty(randTube1);
+        emptyStation.empty(randTube1);
       } else if (FselectedTube == randTube2.capacity) {
-        fillStation.empty(randTube2);
+        emptyStation.empty(randTube2);
       }
     }
   }
