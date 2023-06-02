@@ -96,6 +96,11 @@ void draw() {
     fill(0);
     text("MODE: EMPTY", 700, 560);
   }
+  if (MODE == VICTORY) {
+    textSize(15);
+    fill(0);
+    text("YOU DID IT!", 700, 560);
+  }
   if (keyPressed && key != '1' && key != '2' && key != '3' && key != '4' && key != '5' && key != '6' && key != '7' && key != '8' && key != 'f' && key != 'F' && key != 'T' && key != 't'&& key != 'E' && key != 'e' && key != 's' && key != 'S') {
     textSize(30);
     fill(0);
