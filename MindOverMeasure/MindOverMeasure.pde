@@ -112,7 +112,7 @@ void draw() {
       textSize(30);
       fill(0);
       text("Please click again to select a valid tube.", 20, 40);
-    } else if (colour == -1){
+    } else if (colour == -1) {
       int selTube = mouseX/80;
       if (selTube != randTube1.capacity && selTube != randTube2.capacity) {
         textSize(30);
