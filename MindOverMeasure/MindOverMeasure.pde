@@ -89,12 +89,32 @@ void draw() {
     textSize(15);
     fill(0);
     text("MODE: SOLUTION", 700, 560);
-    solver(randTube1, randTube2, chosenNum);
+    //solver(randTube1, randTube2, chosenNum);
   }
   if (MODE == EMPTY) {
     textSize(15);
     fill(0);
     text("MODE: EMPTY", 700, 560);
+  }
+  if (keyPressed && key != '1' && key != '2' && key != '3' && key != '4' && key != '5' && key != '6' && key != '7' && key != '8' && key != 'f' && key != 'F' && key != 'T' && key != 't'&& key != 'E' && key != 'e' && key != 's' && key != 'S') {
+    textSize(30);
+    fill(0);
+    text("Please select a valid key option.", 20, 40);
+  }
+  if (mousePressed) {
+    color colour = get(mouseX, mouseY);
+    if (colour != -1) {
+      textSize(30);
+      fill(0);
+      text("Please click again to select a valid tube.", 20, 40);
+    } else if (colour == -1){
+      int selTube = mouseX/80;
+      if (selTube != randTube1.capacity && selTube != randTube2.capacity) {
+        textSize(30);
+        fill(0);
+        text("Please click again to select a valid tube.", 20, 40);
+      }
+    }
   }
 }
 
@@ -116,9 +136,9 @@ void keyTyped() {
     } else if (key == 's'  || key == 'S') {
       MODE = FORFEIT;
     } else {
-      textSize(30);
-      fill(0);
-      text("Please select a valid key option.", 20, 40);
+      //textSize(30);
+      //fill(0);
+      //text("Please select a valid key option.", 20, 40);
     }
   }
 }
@@ -130,10 +150,10 @@ void mousePressed() {
     tempSelectedTube = (mouseX / 80);
     //println(tempSelectedTube);
   } else {
-    textSize(30);
-    fill(0);
-    text("Please click again to select a valid tube.", 20, 40);
-    delay(10);
+    //textSize(30);
+    //fill(0);
+    //text("Please click again to select a valid tube.", 20, 40);
+    //delay(10);
   }
   if (MODE == TRANSFER) {
     if (!transferFrom) {
@@ -323,32 +343,33 @@ public static boolean isPossible(Tube one, Tube two, int numBalls) {
 }
 
 // code should work can you just implement it
-
+/*
 void solve(Tube one, Tube two, int numbBalls) {
-  //if (isPossible(one, two, numbBalls)) {
-    Tube greater=one;
-    Tube lesser=two;
-    if (one.capacity<two.capacity) {
-      greater=two;
-      lesser=one;
-    }
-    fillStation.fill(greater);
-    //delay(5);
-    greater.transfer(lesser);
-    //delay(5);
-    if (two.numBalls==two.capacity) {
-      emptyStation.empty(lesser);
-      //delay(5);
-    }
-    if (greater.numBalls!=numbBalls || lesser.numBalls!=numbBalls) {
-      solve(greater, lesser, numbBalls);
-      //delay(5);
-    }
-  //}
-}
-
-void solver(Tube one, Tube two, int numbBalls) {
-  if (isPossible(one, two, numbBalls)) {
-    solve(one, two, numbBalls);
-  }
-}
+ //if (isPossible(one, two, numbBalls)) {
+ Tube greater=one;
+ Tube lesser=two;
+ if (one.capacity<two.capacity) {
+ greater=two;
+ lesser=one;
+ }
+ fillStation.fill(greater);
+ //delay(5);
+ greater.transfer(lesser);
+ //delay(5);
+ if (two.numBalls==two.capacity) {
+ emptyStation.empty(lesser);
+ //delay(5);
+ }
+ if (greater.numBalls!=numbBalls || lesser.numBalls!=numbBalls) {
+ solve(greater, lesser, numbBalls);
+ //delay(5);
+ }
+ //}
+ }
+ 
+ void solver(Tube one, Tube two, int numbBalls) {
+ if (isPossible(one, two, numbBalls)) {
+ solve(one, two, numbBalls);
+ }
+ }
+ */
