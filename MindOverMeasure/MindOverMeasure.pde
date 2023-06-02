@@ -1,9 +1,10 @@
-import java.util.*; //<>//
+import java.util.*; //<>// //<>// //<>// //<>// //<>// //<>// //<>//
 int chosenNum;
 Tube fillStation;
 Tube emptyStation;
 Tube randTube1;
 Tube randTube2;
+int[] capacities;
 static int numSelect = 0;
 static int TRANSFER = 1;
 int tempSelectedTube;
@@ -14,16 +15,18 @@ int EselectedTube;
 static int FILL = 2;
 static int EMPTY = 3;
 static int noState = 4;
-static int MODE = numSelect; //<>// //<>// //<>// //<>// //<>//
+static int VICTORY = 5;
+static int MODE = numSelect;
+static int FORFEIT = 6;
 boolean transferFrom;
 boolean transferInto;
 
 void setup() {
   size(900, 600);
   frameRate(80);
-  randTube1 = randomizeTube();
-  randTube2 = randomizeTube();
-
+  capacities= generateCapacities();
+  randTube1 = new Tube(capacities[0]);
+  randTube2 = new Tube (capacities[1]);
   fillStation = new Tube();
   emptyStation = new Tube();
   emptyStation.numBalls = 0;
@@ -33,6 +36,12 @@ void draw() {
   background(#8AC4F0);
   textSize(20);
   fill(0);
+  if (MODE==VICTORY) {
+    textSize(15);
+    fill(0);
+    text("CONGRAGULATIONS, YOU GOT IT!", 450, 300); // make this last longer
+    MODE=numSelect;
+  }
   if (MODE == numSelect) {
     textSize(15);
     fill(0);
@@ -76,10 +85,41 @@ void draw() {
     fill(0);
     text("MODE: FILL", 700, 560);
   }
+  if (MODE == FORFEIT) {
+    textSize(15);
+    fill(0);
+    text("MODE: SOLUTION", 700, 560);
+    //solver(randTube1, randTube2, chosenNum);
+  }
   if (MODE == EMPTY) {
     textSize(15);
     fill(0);
     text("MODE: EMPTY", 700, 560);
+  }
+  if (MODE == VICTORY) {
+    textSize(15);
+    fill(0);
+    text("YOU DID IT!", 700, 560);
+  }
+  if (keyPressed && key != '1' && key != '2' && key != '3' && key != '4' && key != '5' && key != '6' && key != '7' && key != '8' && key != 'f' && key != 'F' && key != 'T' && key != 't'&& key != 'E' && key != 'e' && key != 's' && key != 'S') {
+    textSize(30);
+    fill(0);
+    text("Please select a valid key option.", 20, 40);
+  }
+  if (mousePressed) {
+    color colour = get(mouseX, mouseY);
+    if (colour != -1) {
+      textSize(30);
+      fill(0);
+      text("Please click again to select a valid tube.", 20, 40);
+    } else if (colour == -1) {
+      int selTube = mouseX/80;
+      if (selTube != randTube1.capacity && selTube != randTube2.capacity) {
+        textSize(30);
+        fill(0);
+        text("Please click again to select a valid tube.", 20, 40);
+      }
+    }
   }
 }
 
@@ -88,6 +128,9 @@ void keyTyped() {
   if (keyPressed) {
     if ((key == '1' || key == '2' || key == '3' || key == '4' || key == '5' || key == '6' || key == '7') && MODE == numSelect) {
       chosenNum = Character.getNumericValue(key);
+      capacities= generateCapacities();
+      randTube1 = new Tube(capacities[0]);
+      randTube2 = new Tube (capacities[1]);
       MODE = noState;
     } else if (key == 't' || key == 'T') {
       MODE = TRANSFER;
@@ -95,10 +138,12 @@ void keyTyped() {
       MODE = FILL;
     } else if (key == 'e'  || key == 'E') {
       MODE = EMPTY;
+    } else if (key == 's'  || key == 'S') {
+      MODE = FORFEIT;
     } else {
-      textSize(30);
-      fill(0);
-      text("Please select a valid key option.", 20, 40);
+      //textSize(30);
+      //fill(0);
+      //text("Please select a valid key option.", 20, 40);
     }
   }
 }
@@ -110,10 +155,10 @@ void mousePressed() {
     tempSelectedTube = (mouseX / 80);
     //println(tempSelectedTube);
   } else {
-    textSize(30);
-    fill(0);
-    text("Please click again to select a valid tube.", 20, 40);
-    delay(10);
+    //textSize(30);
+    //fill(0);
+    //text("Please click again to select a valid tube.", 20, 40);
+    //delay(10);
   }
   if (MODE == TRANSFER) {
     if (!transferFrom) {
@@ -133,6 +178,9 @@ void mousePressed() {
       transferFrom = false;
       transferInto = false;
       //MODE = noState;
+    }
+    if (randTube1.numBalls==chosenNum || randTube2.numBalls==chosenNum) {
+      MODE=VICTORY;
     }
   }
   if (MODE == FILL) {
@@ -158,6 +206,9 @@ void mousePressed() {
         fillStation.fill(randTube2);
       }
     }
+    if (randTube1.numBalls==chosenNum || randTube2.numBalls==chosenNum) {
+      MODE=VICTORY;
+    }
   }
   if (MODE==EMPTY) {
     if (tempSelectedTube != randTube1.capacity && tempSelectedTube != randTube2.capacity) {
@@ -172,20 +223,26 @@ void mousePressed() {
         emptyStation.empty(randTube2);
       }
     }
+    if (randTube1.numBalls==chosenNum || randTube2.numBalls==chosenNum) {
+      MODE=VICTORY;
+    }
   }
 }
 
-Tube randomizeTube() {
-  if (randTube1 == null) {
-    int rand = (int)(Math.random() * 7) + 2;
-    return new Tube(rand);
-  } else {
-    int rand = (int)(Math.random() * 7) + 2;
-    while (rand == randTube1.capacity) {
-      rand = (int)(Math.random() * 7) + 2;
+int[] generateCapacities() {
+  int[] result= new int[2];
+  boolean impossible=true;
+  while (impossible) {
+    result[0] = (int)(Math.random() * 7) + 2;
+    result[1]= (int)(Math.random() * 7) + 2;
+    while (result[1]==result[0]) {
+      result[1] = (int)(Math.random() * 7) + 2;
     }
-    return new Tube(rand);
-  }
+    if (isPossible(new Tube(result[0]), new Tube(result[1]), chosenNum)) {
+      impossible=false;
+    }
+  }//System.out.println(Arrays.toString(result));
+  return result;
 }
 
 void drawNumSelect() {
@@ -268,32 +325,56 @@ void drawEmptier() {
     }
   }
 }
-
+/*
 public static int euclid(int a, int b) {
-  if (b==0) {
-    return a;
-  } else {
-    return euclid(b, a%b);
+ if (b==0) {
+ return a;
+ } else {
+ return euclid(b, a%b);
+ }
+ }
+ */
+public static int euclid(int a, int b) {
+  while (b!=0) {
+    int temp = b;
+    b = a % b;
+    a = temp;
   }
+  return a;
 }
+
 public static boolean isPossible(Tube one, Tube two, int numBalls) {
-  return (numBalls%euclid(one.capacity, two.capacity)==0);
+  return (numBalls%euclid(one.capacity, two.capacity)==0&&numBalls<one.capacity&&numBalls<two.capacity);
 }
-/*public static void solve(Tube one, Tube two,int numbBalls){
- if (isPossible(one,two,numbBalls)){
+
+// code should work can you just implement it
+/*
+void solve(Tube one, Tube two, int numbBalls) {
+ //if (isPossible(one, two, numbBalls)) {
  Tube greater=one;
  Tube lesser=two;
- if (one.capacity<two.capacity){
+ if (one.capacity<two.capacity) {
  greater=two;
  lesser=one;
  }
  fillStation.fill(greater);
+ //delay(5);
  greater.transfer(lesser);
- if (two.numBalls==two.capacity){
+ //delay(5);
+ if (two.numBalls==two.capacity) {
  emptyStation.empty(lesser);
+ //delay(5);
  }
- if (greater.numBalls!=numbBalls && lesser.numBalls!=numbBalls){
- solve(greater,lesser,numbBalls);
+ if (greater.numBalls!=numbBalls || lesser.numBalls!=numbBalls) {
+ solve(greater, lesser, numbBalls);
+ //delay(5);
+ }
+ //}
+ }
+ 
+ void solver(Tube one, Tube two, int numbBalls) {
+ if (isPossible(one, two, numbBalls)) {
+ solve(one, two, numbBalls);
  }
  }
- }*/
+ */

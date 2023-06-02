@@ -3,6 +3,7 @@ public class Tube {
   private int[] tube;
   private int capacity;
   private int numBalls;
+  private int ballsTransferred;
 
   public Tube(){// for tube that fills it up
       tube= new int[15];
@@ -43,11 +44,13 @@ public class Tube {
      for (int i=0;i<quantity&&numBalls>0;i++){
        holder[numBalls-1]=0;
        numBalls--;
+       ballsTransferred++;
      }
   }
   public  void remove (int quantity,Tube holder){
      for (int i=0;i<quantity&&holder.numBalls>0;i++){
        holder.removeSpot(holder.numBalls-1);
+       ballsTransferred++;
      }
 
   }
@@ -62,23 +65,26 @@ public class Tube {
        holder.fillSpot(holder.numBalls);;
      }
   }
-
   public  void fill (Tube filled){
      remove(tube,filled.capacity-filled.numBalls);
      add(filled.capacity-filled.numBalls,filled);
+     ballsTransferred=0;
   }
   public  void empty(Tube emptied){
     add(tube,emptied.numBalls);
     remove(emptied.numBalls,emptied);
+    ballsTransferred=0;
  }
    public  void transfer (Tube transferred){
      if (numBalls>=transferred.capacity-transferred.numBalls){
        remove(tube,transferred.capacity-transferred.numBalls);
-       add(transferred.capacity-transferred.numBalls,transferred);
+       add(ballsTransferred,transferred);
+       ballsTransferred=0;
    }
    else{
      remove(tube,numBalls);
-     add(capacity,transferred);
+     add(ballsTransferred,transferred);
+     ballsTransferred=0;
    }
  }
 }

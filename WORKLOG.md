@@ -23,6 +23,9 @@ Worked on fixing merge conflicts and discussed future of project in class.
 
 ## 5/31/23
 Fixed merge conflicts, fixed the transfer method in the Tube class along with fill and empty. Fixed a few bugs to allow for the screen to display. Was absent today so did all of the work in one sitting.
+
+## 6/1/23
+I debugged transfer because there was a bug again because sometimes it transferred when it didn't have to. I added a VICTORY mode that resets the game. Also fixed the random  tube generator Played through the game one time and it worked. 
 ## Ramisa Haque
 
 ### 5/22/23
@@ -39,3 +42,5 @@ Implemented the visual aspects of transfer, empty, and fill to allow user the up
 Added states to keep track of user decisions; implemented keyPressed() to use user input accordingly. Added text prompts to guide user (including invalid input). Implemented mouseClicked() to determine user input and included data to enhance features of keyPressed().
 ### 5/30/23
 Fixed merge conflicts and made sure branches were properly updated. Added new states to the game to keep better track of user decisions as well as more variables to hold such data. Improved implementation of user-prompted transfer to account for ALL exceptions (making sure only correct/possible user input is accepted).
+### 5/31/23
+Organized code to flow more logically. Debugged (a lot) due to logical errors. Implemented initial interface of the game. Completed implementations of fill and empty (with accompanying visuals), transfer implementation nearly complete, but not quite as intended. Added even more instance variables to keep track of specifics and enhance the flow of the game. Also, added a few on-screen text elements for better UX.
