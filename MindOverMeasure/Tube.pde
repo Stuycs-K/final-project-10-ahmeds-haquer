@@ -74,23 +74,14 @@ public class Tube {
     ballsTransferred=0;
   }
   public  void transfer (Tube transferred) {
-    /*
-     if (numBalls>=transferred.capacity-transferred.numBalls){
-     remove(tube,transferred.capacity-transferred.numBalls);
-     add(ballsTransferred,transferred);
-     ballsTransferred=0;
-     }
-     else{
-     remove(tube,numBalls);
-     add(ballsTransferred,transferred);
-     ballsTransferred=0;
-     }
-     */
-    int ballsToTransfer = Math.min(numBalls, transferred.capacity - transferred.numBalls);
-    for (int i = 0; i < ballsToTransfer; i++) {
-      transferred.fillSpot(transferred.numBalls);
-      removeSpot(numBalls - 1);
+    if (numBalls>=transferred.capacity-transferred.numBalls) {
+      remove(tube, transferred.capacity-transferred.numBalls);
+      add(ballsTransferred, transferred);
+      ballsTransferred=0;
+    } else {
+      remove(tube, numBalls);
+      add(ballsTransferred, transferred);
+      ballsTransferred=0;
     }
-    ballsTransferred += ballsToTransfer;
   }
 }
