@@ -1,4 +1,4 @@
-import java.util.*; //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
+import java.util.*; //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
 int chosenNum;
 Tube fillStation;
 Tube emptyStation;
@@ -14,9 +14,9 @@ int FselectedTube;
 int EselectedTube;
 static int FILL = 2;
 static int EMPTY = 3;
-static int noState = 4; //<>//
+static int noState = 4;
 static int VICTORY = 5;
-static int MODE = numSelect; //<>//
+static int MODE = numSelect;
 static int FORFEIT = 6;
 boolean transferFrom;
 boolean transferInto;
@@ -89,7 +89,9 @@ void draw() {
     textSize(15);
     fill(0);
     text("MODE: SOLUTION", 700, 560);
-    //solver(randTube1, randTube2, chosenNum);
+    if (randTube1.numBalls!=chosenNum &&  randTube2.numBalls!=chosenNum) {
+      solver(randTube1, randTube2, chosenNum);
+    }
   }
   if (MODE == EMPTY) {
     textSize(15);
@@ -100,9 +102,10 @@ void draw() {
     textSize(15);
     fill(0);
     int time=second();
-    while(second()< time+10){
+    while (second()< time+10) {
       text("YOU DID IT!", 700, 560);
-  }}
+    }
+  }
   if (keyPressed && key != '1' && key != '2' && key != '3' && key != '4' && key != '5' && key != '6' && key != '7' && key != '8' && key != 'f' && key != 'F' && key != 'T' && key != 't'&& key != 'E' && key != 'e' && key != 's' && key != 'S') {
     textSize(30);
     fill(0);
@@ -350,33 +353,35 @@ public static boolean isPossible(Tube one, Tube two, int numBalls) {
 }
 
 // code should work can you just implement it
-/*
+
 void solve(Tube one, Tube two, int numbBalls) {
- //if (isPossible(one, two, numbBalls)) {
- Tube greater=one;
- Tube lesser=two;
- if (one.capacity<two.capacity) {
- greater=two;
- lesser=one;
- }
- fillStation.fill(greater);
- //delay(5);
- greater.transfer(lesser);
- //delay(5);
- if (two.numBalls==two.capacity) {
- emptyStation.empty(lesser);
- //delay(5);
- }
- if (greater.numBalls!=numbBalls || lesser.numBalls!=numbBalls) {
- solve(greater, lesser, numbBalls);
- //delay(5);
- }
- //}
- }
- 
- void solver(Tube one, Tube two, int numbBalls) {
- if (isPossible(one, two, numbBalls)) {
- solve(one, two, numbBalls);
- }
- }
- */
+  //if (isPossible(one, two, numbBalls)) {
+  println("" + one + " " + two + " " + numbBalls);
+  if (one.numBalls==0) {
+    fillStation.fill(one);
+  }
+  //delay(5);
+  one.transfer(two);
+  //delay(5);
+  if (two.numBalls==two.capacity) {
+    emptyStation.empty(two);
+    //delay(5);
+  }
+  if (one.numBalls!=numbBalls && two.numBalls!=numbBalls) {
+    solve(one, two, numbBalls);
+    //delay(5);
+  }
+  //}
+}
+
+void solver(Tube one, Tube two, int numbBalls) {
+  if (one.capacity>two.capacity) {
+    if (isPossible(one, two, numbBalls)) {
+      solve(one, two, numbBalls);
+    }
+  } else {
+    if (isPossible(two, one, numbBalls)) {
+      solve(two, one, numbBalls);
+    }
+  }
+}
