@@ -1,4 +1,4 @@
-import java.util.*; //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
+import java.util.*; //<>//
 int chosenNum;
 Tube fillStation;
 Tube emptyStation;
@@ -23,6 +23,7 @@ boolean transferFrom;
 boolean transferInto;
 Button game;
 Button sim;
+//public PImage img;
 
 void setup() {
   size(900, 600);
@@ -40,10 +41,7 @@ void draw() {
   textSize(20);
   fill(0);
   if (MODE==VICTORY) {
-    textSize(15);
-    fill(0);
-    text("CONGRAGULATIONS, YOU GOT IT!", 450, 300); // make this last longer
-    MODE=numSelect;
+    drawVictory();
   }
   if (MODE == HOME) {
     background(#326F33);
@@ -112,9 +110,6 @@ void draw() {
     fill(0);
     text("MODE: SOLUTION", 700, 560);
     if (randTube1.numBalls!=chosenNum &&  randTube2.numBalls!=chosenNum) {
-=======
-    if (randTube1.numBalls!=chosenNum && randTube2.numBalls!=chosenNum) {
->>>>>>> db697292d3e2a29238292be6c65594b4cee3cddf
       solver(randTube1, randTube2, chosenNum);
     }
   }
@@ -123,22 +118,12 @@ void draw() {
     fill(0);
     text("MODE: EMPTY", 700, 560);
   }
-  if (MODE == VICTORY) {
-    textSize(15);
-    fill(0);
-    int time=second();
-    while (second()< time+10) {
-      text("YOU DID IT!", 700, 560);
-    }
-  }
   if (MODE == numSelect) {
-    //while (chosenNum == 0) {
     if (keyPressed && key != '1' && key != '2' && key != '3' && key != '4' && key != '5' && key != '6' && key != '7' && key != '8' && key != 'f' && key != 'F' && key != 'T' && key != 't'&& key != 'E' && key != 'e' && key != 's' && key != 'S') {
       textSize(30);
       fill(0);
       text("Please select a valid key option.", 20, 40);
     }
-    //}
   }
   if (mousePressed) {
     if (MODE == HOME) {
@@ -186,6 +171,8 @@ void keyTyped() {
       MODE = EMPTY;
     } else if (key == 's'  || key == 'S') {
       MODE = FORFEIT;
+    } else if (key == 'r'  || key == 'R') {
+      MODE = numSelect;
     } else {
       //textSize(30);
       //fill(0);
@@ -193,6 +180,17 @@ void keyTyped() {
     }
   }
 }
+
+void drawVictory() {
+  /*img=loadImage("youwin.heic");
+  image(img,0,0);*/
+  rect(0,0,900,600);
+  textSize(20);
+  fill(0);
+  textAlign(CENTER, CENTER);
+  text("YOU DID IT! Congratulations! You can now press 'R' to restart!", 450, 300);
+}
+
 
 void mousePressed() {
   color col = get(mouseX, mouseY);
@@ -371,15 +369,7 @@ void drawEmptier() {
     }
   }
 }
-/*
-public static int euclid(int a, int b) {
- if (b==0) {
- return a;
- } else {
- return euclid(b, a%b);
- }
- }
- */
+
 public static int euclid(int a, int b) {
   while (b!=0) {
     int temp = b;
@@ -390,54 +380,46 @@ public static int euclid(int a, int b) {
 }
 
 public static boolean isPossible(Tube one, Tube two, int numBalls) {
-  return (numBalls%euclid(one.capacity, two.capacity)==0&&numBalls<one.capacity&&numBalls<two.capacity);
+  if ((numBalls%euclid(one.capacity, two.capacity)==0)) {
+    if (one.capacity==numBalls||two.capacity==numBalls) {
+      return false;
+    }
+    if (one.capacity<numBalls && two.capacity<numBalls) {
+      return false;
+    }
+    return true;
+  }
+  return false;
 }
 
 // code should work can you just implement it
 
 
-void solve(Tube one, Tube two, int numbBalls) {
-  //if (isPossible(one, two, numbBalls)) {
-  delay(2);
-  println("" + one + " " + two + " " + numbBalls);
-  if (one.numBalls==0) {
-    fillStation.fill(one);
-  }
-  one.transfer(two);
-  if (two.numBalls==two.capacity) {
-    emptyStation.empty(two);
-  }
-  if (one.numBalls!=numbBalls && two.numBalls!=numbBalls) {
-    solve(one, two, numbBalls);
-  }
-  //}
-
-void solve(Tube one, Tube two, int numbBalls) {
-  if (one.numBalls==0) {
-    fillStation.fill(one);
-  }
-  //delay(5);
-  one.transfer(two);
-  //delay(5);
-  if (two.numBalls==two.capacity) {
-    emptyStation.empty(two);
+  void solve(Tube one, Tube two, int numbBalls) {
+    if (one.numBalls==0) {
+      fillStation.fill(one);
+    }
     //delay(5);
-  }
-  if (one.numBalls!=numbBalls && two.numBalls!=numbBalls) {
-    solve(one, two, numbBalls);
+    one.transfer(two);
     //delay(5);
-  }
-
-}
-
-void solver(Tube one, Tube two, int numbBalls) {
-  if (one.capacity>two.capacity) {
-    if (isPossible(one, two, numbBalls)) {
+    if (two.numBalls==two.capacity) {
+      emptyStation.empty(two);
+      //delay(5);
+    }
+    if (one.numBalls!=numbBalls && two.numBalls!=numbBalls) {
       solve(one, two, numbBalls);
-    }
-  } else {
-    if (isPossible(two, one, numbBalls)) {
-      solve(two, one, numbBalls);
+      //delay(5);
     }
   }
-}
+
+  void solver(Tube one, Tube two, int numbBalls) {
+    if (one.capacity>two.capacity) {
+      if (isPossible(one, two, numbBalls)) {
+        solve(one, two, numbBalls);
+      }
+    } else {
+      if (isPossible(two, one, numbBalls)) {
+        solve(two, one, numbBalls);
+      }
+    }
+  }
