@@ -40,7 +40,7 @@ void draw() {
   background(#8AC4F0);
   textSize(20);
   fill(0);
-  if (MODE==VICTORY) {
+  if (MODE==VICTORY || randTube1.capacity==chosenNum || randTube2.capacity==chosenNum) {
     drawVictory();
   }
   if (MODE == HOME) {
