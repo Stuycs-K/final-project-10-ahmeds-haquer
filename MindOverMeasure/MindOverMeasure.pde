@@ -1,4 +1,4 @@
-import java.util.*; //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
+import java.util.*; //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
 int chosenNum;
 Tube fillStation;
 Tube emptyStation;
@@ -112,6 +112,9 @@ void draw() {
     fill(0);
     text("MODE: SOLUTION", 700, 560);
     if (randTube1.numBalls!=chosenNum &&  randTube2.numBalls!=chosenNum) {
+=======
+    if (randTube1.numBalls!=chosenNum && randTube2.numBalls!=chosenNum) {
+>>>>>>> db697292d3e2a29238292be6c65594b4cee3cddf
       solver(randTube1, randTube2, chosenNum);
     }
   }
@@ -392,6 +395,7 @@ public static boolean isPossible(Tube one, Tube two, int numBalls) {
 
 // code should work can you just implement it
 
+
 void solve(Tube one, Tube two, int numbBalls) {
   //if (isPossible(one, two, numbBalls)) {
   delay(2);
@@ -407,6 +411,23 @@ void solve(Tube one, Tube two, int numbBalls) {
     solve(one, two, numbBalls);
   }
   //}
+
+void solve(Tube one, Tube two, int numbBalls) {
+  if (one.numBalls==0) {
+    fillStation.fill(one);
+  }
+  //delay(5);
+  one.transfer(two);
+  //delay(5);
+  if (two.numBalls==two.capacity) {
+    emptyStation.empty(two);
+    //delay(5);
+  }
+  if (one.numBalls!=numbBalls && two.numBalls!=numbBalls) {
+    solve(one, two, numbBalls);
+    //delay(5);
+  }
+
 }
 
 void solver(Tube one, Tube two, int numbBalls) {
