@@ -3,27 +3,16 @@ public class Tester{
     System.out.println("HELLO");
     Tube filler= new Tube();
     Tube test= new Tube(8);
-    Tube test2= new Tube(3);
-    filler.fill(test);
-    System.out.println(test + " 8");
-    System.out.println(test2+ " 0");
-    test.transfer(test2);
-    System.out.println(test + " 5");
-    System.out.println(test2+ " 3");
-    test2.transfer(test);
-    System.out.println(test + " 8");
-    System.out.println(test2+ " 0");
-    filler.empty(test);
-    System.out.println(test + " 0");
-    System.out.println(test2+ " 0");
-    test.transfer(test2);
-    System.out.println(test + " 0");
-    System.out.println(test2+ " 0");
+    Tube test2= new Tube(6);
+    solve(test,test2,filler,2);
+    System.out.println(test);
+    System.out.println(test2);
+
 
 
     //System.out.println(euclid(15,35));
-  }}
-  /*public static int euclid(int a, int b){
+  }
+  public static int euclid(int a, int b){
     if (b==0){
       return a;
     }
@@ -32,9 +21,9 @@ public class Tester{
     }
   }
   public static boolean isPossible(Tube one, Tube two, int numBalls){
-    return (numBalls%euclid(one.capacity,two.capacity)==0)
+    return (numBalls%euclid(one.capacity,two.capacity)==0);
   }
-  public static void solve(Tube one, Tube two,int numbBalls){
+  public static void solve(Tube one, Tube two, Tube station, int numbBalls){
     if (isPossible(one,two,numBalls)){
       Tube greater=one;
       Tube lesser=two;
@@ -51,4 +40,5 @@ public class Tester{
         solve(greater,lesser);
       }
     }
-}*/
+}
+}
