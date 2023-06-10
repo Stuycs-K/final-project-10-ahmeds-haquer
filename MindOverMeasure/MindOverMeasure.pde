@@ -1,4 +1,4 @@
-import java.util.*; //<>//
+import java.util.*; //<>// //<>//
 int chosenNum;
 Tube fillStation;
 Tube emptyStation;
@@ -61,12 +61,14 @@ void draw() {
   }
   if (MODE == numSelect) {
     background(#AACCD8);
+    drawNumSelect();
     textSize(35);
     fill(0);
-    text("Select a number by typing the according key.", 200, 160);
+    textAlign(CENTER, CENTER);
+    text("Select a number by typing the according key.", 450, 160);
     textSize(20);
-    text("The number you select is very important...", 200, 460);
-    drawNumSelect();
+    textAlign(CENTER, CENTER);
+    text("The number you select is very important...", 450, 460);
   }
   if (MODE != numSelect && MODE != HOME) {
     textSize(15);
@@ -290,14 +292,14 @@ int[] generateCapacities() {
 }
 
 void drawNumSelect() {
-  int num = 1;
-  for (int i = 70; i < height && num < 8; i+= 70) {
-    fill(255);
+  int num = 1; //70
+  for (int i = 90; i < width && num < 8; i+= 120) {
+    fill(220,220,220);
     stroke(#143DA2);
-    rect(30, i, 70, 50, 8);
+    circle(i, 280, 90);
     textSize(30);
     fill(0);
-    text(""+ num, 57, i+35);
+    text(""+ num, i,275);
     num++;
   }
 }
@@ -359,7 +361,7 @@ void drawEmptier() {
   rect(width - 120, 100, 50, 420);
   fill(0);
   textSize(17);
-  text("empty", width - 115, 120);
+  text("empty", width - 95, 120);
   int y = 400;
   if (emptyStation != null) {
     for (int j = emptyStation.numBalls; j > 0; j--) {
