@@ -1,4 +1,5 @@
 import java.util.*;  //<>//
+import processing.sound.*;
 int chosenNum;
 Tube fillStation;
 Tube emptyStation;
@@ -28,9 +29,14 @@ Button home;
 int countdown;
 int tracker;
 boolean transfer;
+SoundFile player;
+SoundFile yay;
+int soundTracker=0;
 //public PImage img;
 
 void setup() {
+  player= new SoundFile(this,"ding2.mp3");
+  yay=new SoundFile(this,"yay.mp3");
   size(900, 600);
   frameRate(80);
   capacities= generateCapacities();
@@ -129,6 +135,10 @@ void draw() {
       solver(randTube1, randTube2, chosenNum);
     }
     else{
+    soundTracker++;
+    if(soundTracker==1){
+      yay.play();
+    }
     fill(0);
     textSize(20);
     textAlign(CENTER,CENTER);
@@ -148,6 +158,10 @@ void draw() {
     }
   }
   if (MODE==VICTORY) {
+    soundTracker++;
+    if(soundTracker==1){
+      yay.play();
+    }
     background(#25BDF2);
     drawVictory();
   }
@@ -193,6 +207,10 @@ void keyTyped() {
     }
     else if (MODE==VICTORY){
       if (key == 'r'  || key == 'R') {
+      countdown=0;
+      soundTracker=0;
+      tracker=60;
+      transfer=true;
       MODE = numSelect;
     }
     }
@@ -205,6 +223,10 @@ void keyTyped() {
     } else if (key == 's'  || key == 'S') {
       MODE = FORFEIT;
     } else if (key == 'r'  || key == 'R') {
+      countdown=0;
+      soundTracker=0;
+      tracker=60;
+      transfer=true;
       MODE = numSelect;
     } else {
       //textSize(30);
@@ -253,11 +275,13 @@ void mousePressed() {
       transferInto = true;
     }
     if (TselectedTube1 == randTube1.capacity) {
+      player.play();
       randTube1.transfer(randTube2);
       transferFrom = false;
       transferInto = false;
       //MODE = noState; 
     } else if (TselectedTube1 == randTube2.capacity) {
+      player.play();
       randTube2.transfer(randTube1);
       transferFrom = false;
       transferInto = false;
@@ -286,8 +310,10 @@ void mousePressed() {
     } else {
       FselectedTube = tempSelectedTube;
       if (FselectedTube == randTube1.capacity) {
+        player.play();
         fillStation.fill(randTube1);
       } else if (FselectedTube == randTube2.capacity) {
+        player.play();
         fillStation.fill(randTube2);
       }
     }
@@ -303,8 +329,10 @@ void mousePressed() {
     } else {
       FselectedTube = tempSelectedTube;
       if (FselectedTube == randTube1.capacity) {
+        player.play();
         emptyStation.empty(randTube1);
       } else if (FselectedTube == randTube2.capacity) {
+        player.play();
         emptyStation.empty(randTube2);
       }
     }
@@ -459,6 +487,7 @@ public static boolean isPossible(Tube one, Tube two, int numBalls) {
 
 void solve(Tube one, Tube two) {
     if (one.numBalls==0&&countdown==tracker) {
+       player.play();
       fillStation.fill(one);
       tracker+=300;
       transfer=true;
@@ -467,12 +496,14 @@ void solve(Tube one, Tube two) {
       textAlign(CENTER,CENTER);
   }
   else if (transfer&&countdown==tracker){
+     player.play();
     one.transfer(two);
     println(tracker + " "+countdown);
     tracker+=300;
     transfer=false;
   }
   else if (two.numBalls==two.capacity&&countdown==tracker) {
+     player.play();
     println(tracker +" "+  countdown);
     emptyStation.empty(two);
     tracker+=300;
