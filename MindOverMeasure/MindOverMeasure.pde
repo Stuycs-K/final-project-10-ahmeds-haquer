@@ -1,4 +1,4 @@
-import java.util.*; //<>// //<>// //<>//
+import java.util.*; //<>// //<>// //<>// //<>//
 int chosenNum;
 Tube fillStation;
 Tube emptyStation;
@@ -208,8 +208,9 @@ void drawVictory() {
 
 void mousePressed() {
   color col = get(mouseX, mouseY);
-  //println(col);
+  println(col);
   if (col == -1) {
+    println(mouseX);
     tempSelectedTube = (mouseX / 80);
     //println(tempSelectedTube);
   } else {
@@ -235,7 +236,7 @@ void mousePressed() {
       randTube1.transfer(randTube2);
       transferFrom = false;
       transferInto = false;
-      //MODE = noState;
+      //MODE = noState; 
     } else if (TselectedTube1 == randTube2.capacity) {
       randTube2.transfer(randTube1);
       transferFrom = false;
@@ -257,6 +258,7 @@ void mousePressed() {
      fillStation.fill(tester);
      println(tester.toString());
      */
+     //println(tempSelectedTube);
     if (tempSelectedTube != randTube1.capacity && tempSelectedTube != randTube2.capacity) {
       textSize(30);
       fill(0);
