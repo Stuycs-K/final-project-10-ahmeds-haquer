@@ -1,4 +1,5 @@
-import java.util.*; //<>// //<>// //<>//
+import java.util.*;  //<>//
+import processing.sound.*;
 int chosenNum;
 Tube fillStation;
 Tube emptyStation;
@@ -25,9 +26,17 @@ boolean transferInto;
 Button game;
 Button sim;
 Button home;
+int countdown;
+int tracker;
+boolean transfer;
+SoundFile player;
+SoundFile yay;
+int soundTracker=0;
 //public PImage img;
 
 void setup() {
+  player= new SoundFile(this,"ding2.mp3");
+  yay=new SoundFile(this,"yay.mp3");
   size(900, 600);
   frameRate(80);
   capacities= generateCapacities();
@@ -36,6 +45,9 @@ void setup() {
   fillStation = new Tube();
   emptyStation = new Tube();
   emptyStation.numBalls = 0;
+  countdown=0;
+  tracker=60;
+  transfer=true;
 }
 
 void draw() {
@@ -115,11 +127,22 @@ void draw() {
     text("Click to select a tube to fill.", 330, 90);
   }
   if (MODE == FORFEIT) {
+    countdown+=1;
     textSize(30);
     fill(#3980A2);
     text("SOLUTION", 300, 50);
     if (randTube1.numBalls!=chosenNum && randTube2.numBalls!=chosenNum) {
       solver(randTube1, randTube2, chosenNum);
+    }
+    else{
+    soundTracker++;
+    if(soundTracker==1){
+      yay.play();
+    }
+    fill(0);
+    textSize(20);
+    textAlign(CENTER,CENTER);
+    text("And that is the solution! You may now press 'r' or 'R' to retry!", 450, 550);
     }
   }
   if (MODE == EMPTY) {
@@ -135,6 +158,10 @@ void draw() {
     }
   }
   if (MODE==VICTORY) {
+    soundTracker++;
+    if(soundTracker==1){
+      yay.play();
+    }
     background(#25BDF2);
     drawVictory();
   }
@@ -149,6 +176,7 @@ void draw() {
     }
     if (MODE == FILL || MODE == TRANSFER || MODE == EMPTY) {
       color colour = get(mouseX, mouseY);
+      println(colour);
       if (colour != -1) {
         textSize(15);
         fill(#104D62);
@@ -176,7 +204,17 @@ void keyTyped() {
         randTube2 = new Tube (capacities[1]);
         MODE = noState;
       }
-    } else if (key == 't' || key == 'T') {
+    }
+    else if (MODE==VICTORY){
+      if (key == 'r'  || key == 'R') {
+      countdown=0;
+      soundTracker=0;
+      tracker=60;
+      transfer=true;
+      MODE = numSelect;
+    }
+    }
+    else if (key == 't' || key == 'T') {
       MODE = TRANSFER;
     } else if (key == 'f' || key == 'F') {
       MODE = FILL;
@@ -185,6 +223,10 @@ void keyTyped() {
     } else if (key == 's'  || key == 'S') {
       MODE = FORFEIT;
     } else if (key == 'r'  || key == 'R') {
+      countdown=0;
+      soundTracker=0;
+      tracker=60;
+      transfer=true;
       MODE = numSelect;
     } else {
       //textSize(30);
@@ -208,8 +250,9 @@ void drawVictory() {
 
 void mousePressed() {
   color col = get(mouseX, mouseY);
-  //println(col);
+  println(mouseY);
   if (col == -1) {
+    println(mouseX);
     tempSelectedTube = (mouseX / 80);
     //println(tempSelectedTube);
   } else {
@@ -232,11 +275,13 @@ void mousePressed() {
       transferInto = true;
     }
     if (TselectedTube1 == randTube1.capacity) {
+      player.play();
       randTube1.transfer(randTube2);
       transferFrom = false;
       transferInto = false;
-      //MODE = noState;
+      //MODE = noState; 
     } else if (TselectedTube1 == randTube2.capacity) {
+      player.play();
       randTube2.transfer(randTube1);
       transferFrom = false;
       transferInto = false;
@@ -257,6 +302,7 @@ void mousePressed() {
      fillStation.fill(tester);
      println(tester.toString());
      */
+     //println(tempSelectedTube);
     if (tempSelectedTube != randTube1.capacity && tempSelectedTube != randTube2.capacity) {
       textSize(30);
       fill(0);
@@ -264,8 +310,10 @@ void mousePressed() {
     } else {
       FselectedTube = tempSelectedTube;
       if (FselectedTube == randTube1.capacity) {
+        player.play();
         fillStation.fill(randTube1);
       } else if (FselectedTube == randTube2.capacity) {
+        player.play();
         fillStation.fill(randTube2);
       }
     }
@@ -281,8 +329,10 @@ void mousePressed() {
     } else {
       FselectedTube = tempSelectedTube;
       if (FselectedTube == randTube1.capacity) {
+        player.play();
         emptyStation.empty(randTube1);
       } else if (FselectedTube == randTube2.capacity) {
+        player.play();
         emptyStation.empty(randTube2);
       }
     }
@@ -345,7 +395,7 @@ void drawCapTubes() {
     //PFont font = createFont("STHeitiTC-Medium-30.vlw", 30);
     //textFont(font);
     if (tubeNum == randTube1.capacity || tubeNum == randTube2.capacity) {
-      fill(#F7F7F5);
+      fill(255);
     } else {
       fill(#D8D8D4);
     }
@@ -435,31 +485,36 @@ public static boolean isPossible(Tube one, Tube two, int numBalls) {
 // code should work can you just implement it
 
 
-void solve(Tube one, Tube two, int numbBalls) {
-  if (one.numBalls==0) {
-    fillStation.fill(one);
+void solve(Tube one, Tube two) {
+    if (one.numBalls==0&&countdown==tracker) {
+       player.play();
+      fillStation.fill(one);
+      tracker+=300;
+      transfer=true;
+      fill(0);
+      textSize(20);
+      textAlign(CENTER,CENTER);
   }
-  //delay(5);
-  one.transfer(two);
-  //delay(5);
-  if (two.numBalls==two.capacity) {
+  else if (transfer&&countdown==tracker){
+     player.play();
+    one.transfer(two);
+    println(tracker + " "+countdown);
+    tracker+=300;
+    transfer=false;
+  }
+  else if (two.numBalls==two.capacity&&countdown==tracker) {
+     player.play();
+    println(tracker +" "+  countdown);
     emptyStation.empty(two);
-    //delay(5);
+    tracker+=300;
+    transfer=true;
   }
-  if (one.numBalls!=numbBalls && two.numBalls!=numbBalls) {
-    solve(one, two, numbBalls);
-    //delay(5);
   }
-}
 
 void solver(Tube one, Tube two, int numbBalls) {
   if (one.capacity>two.capacity) {
-    if (isPossible(one, two, numbBalls)) {
-      solve(one, two, numbBalls);
-    }
+      solve(one, two);
   } else {
-    if (isPossible(two, one, numbBalls)) {
-      solve(two, one, numbBalls);
-    }
+      solve(two, one);
   }
 }
