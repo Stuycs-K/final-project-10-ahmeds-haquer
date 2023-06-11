@@ -115,9 +115,9 @@ void draw() {
     text("Click to select a tube to fill.", 330, 90);
   }
   if (MODE == FORFEIT) {
-    textSize(15);
-    fill(0);
-    text("MODE: SOLUTION", 700, 560);
+    textSize(30);
+    fill(#3980A2);
+    text("SOLUTION", 300, 50);
     if (randTube1.numBalls!=chosenNum && randTube2.numBalls!=chosenNum) {
       solver(randTube1, randTube2, chosenNum);
     }
@@ -344,7 +344,11 @@ void drawCapTubes() {
     //figure out font stuff
     //PFont font = createFont("STHeitiTC-Medium-30.vlw", 30);
     //textFont(font);
-    fill(255);
+    if (tubeNum == randTube1.capacity || tubeNum == randTube2.capacity) {
+      fill(#F7F7F5);
+    } else {
+      fill(#D8D8D4);
+    }
     stroke(#143DA2);
     int y = 370;
     rect(i, 150, 50, y);
