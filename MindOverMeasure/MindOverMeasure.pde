@@ -1,4 +1,4 @@
-import java.util.*; //<>// //<>//
+import java.util.*; //<>// //<>// //<>//
 int chosenNum;
 Tube fillStation;
 Tube emptyStation;
@@ -19,10 +19,12 @@ static int VICTORY = 5;
 static int HOME = 7;
 static int MODE = HOME;
 static int FORFEIT = 6;
+static int SIMULATOR = 8;
 boolean transferFrom;
 boolean transferInto;
 Button game;
 Button sim;
+Button home;
 //public PImage img;
 
 void setup() {
@@ -37,27 +39,29 @@ void setup() {
 }
 
 void draw() {
-  background(#8AC4F0);
+  background(#EAD980);
   textSize(20);
   fill(0);
-  if (MODE==VICTORY || randTube1.capacity==chosenNum || randTube2.capacity==chosenNum) {
-    drawVictory();
-  }
+
   if (MODE == HOME) {
-    background(#326F33);
-    textSize(140);
+    drawHome();
+  }
+  if (MODE != HOME) {
+    fill(#D6EAB4);
+    stroke(#A8C479);
+    home = new Button(#D6EAB4, #C0E582, 20, 20, 60, 40);
     fill(0);
-    text("MIND OVER", 140, 200);
-    text("MEASURE", 170, 300);
-    fill(#E3E3E3);
-    game = new Button(#E3E3E3, #C5CBC7, 200, 450, 160, 70);
+    textSize(20);
+    text("HOME", 50, 35);
+  }
+
+  if (MODE == SIMULATOR) {
+    textSize(15);
     fill(0);
-    textSize(40);
-    text("GAME", 230, 500);
-    fill(#E3E3E3);
-    sim = new Button(#E3E3E3, #C5CBC7, 450, 450, 260, 70);
-    fill(0);
-    text("SIMULATOR", 480, 500);
+    text("solving...", 700, 560);
+    if (randTube1.numBalls!=chosenNum && randTube2.numBalls!=chosenNum) {
+      solver(randTube1, randTube2, chosenNum);
+    }
   }
   if (MODE == numSelect) {
     background(#AACCD8);
@@ -81,9 +85,9 @@ void draw() {
   }
 
   if (MODE == noState) {
-    textSize(15);
-    fill(0);
-    text("choose an action", 700, 560);
+    textSize(20);
+    fill(#104D62);
+    text("Choose an action by clicking 'f'(fill), 'e'(empty), 't'(transfer) or 's'(forfeit).", 330, 90);
   }
 
   if (MODE == TRANSFER) {
@@ -92,8 +96,8 @@ void draw() {
     text("MODE: TRANSFER", 700, 560);
     if (!transferFrom) {
       textSize(25);
-      fill(0);
-      text("Select tube to transfer from.", 20, 40);
+      fill(#104D62);
+      text("Click to select a tube to transfer from.", 330, 90);
     }
     if (transferFrom && !transferInto) {
       textSize(25);
@@ -106,12 +110,15 @@ void draw() {
     textSize(15);
     fill(0);
     text("MODE: FILL", 700, 560);
+    textSize(25);
+    fill(#104D62);
+    text("Click to select a tube to fill.", 330, 90);
   }
   if (MODE == FORFEIT) {
-    textSize(15);
-    fill(0);
-    text("MODE: SOLUTION", 700, 560);
-    if (randTube1.numBalls!=chosenNum &&  randTube2.numBalls!=chosenNum) {
+    textSize(30);
+    fill(#3980A2);
+    text("SOLUTION", 300, 50);
+    if (randTube1.numBalls!=chosenNum && randTube2.numBalls!=chosenNum) {
       solver(randTube1, randTube2, chosenNum);
     }
   }
@@ -127,27 +134,31 @@ void draw() {
       text("Please select a valid key option.", 20, 40);
     }
   }
+  if (MODE==VICTORY) {
+    background(#25BDF2);
+    drawVictory();
+  }
   if (mousePressed) {
     if (MODE == HOME) {
       if (game.isPressed()) {
         MODE = numSelect;
       } else if (sim.isPressed()) {
         chosenNum = (int)(Math.random()*7) + 1;
-        MODE = FORFEIT;
+        MODE = SIMULATOR;
       }
     }
     if (MODE == FILL || MODE == TRANSFER || MODE == EMPTY) {
       color colour = get(mouseX, mouseY);
       if (colour != -1) {
-        textSize(30);
-        fill(0);
-        text("Please click again to select a valid tube.", 20, 40);
+        textSize(15);
+        fill(#104D62);
+        text("Please click again to select a valid tube.", 300, 40);
       } else if (colour == -1) {
         int selTube = mouseX/80;
         if (selTube != randTube1.capacity && selTube != randTube2.capacity) {
-          textSize(30);
-          fill(0);
-          text("Please click again to select a valid tube.", 20, 40);
+          textSize(15);
+          fill(#104D62);
+          text("Please click again to select a valid tube.", 300, 40);
         }
       }
     }
@@ -185,12 +196,13 @@ void keyTyped() {
 
 void drawVictory() {
   /*img=loadImage("youwin.heic");
-  image(img,0,0);*/
-  rect(0,0,900,600);
-  textSize(20);
+   image(img,0,0);*/
+  background(#25BDF2);
+  //rect(0, 0, 900, 600);
+  textSize(60);
   fill(0);
   textAlign(CENTER, CENTER);
-  text("YOU DID IT! Congratulations! You can now press 'R' to restart!", 450, 300);
+  text("YOU DID IT! Congratulations! \n You can now press 'R' to restart!", 450, 300);
 }
 
 
@@ -205,6 +217,11 @@ void mousePressed() {
     //fill(0);
     //text("Please click again to select a valid tube.", 20, 40);
     //delay(10);
+  }
+  if (MODE != HOME) {
+    if (home.isPressed()) {
+      MODE = HOME;
+    }
   }
   if (MODE == TRANSFER) {
     if (!transferFrom) {
@@ -291,15 +308,32 @@ int[] generateCapacities() {
   return result;
 }
 
+void drawHome() {
+  background(#326F33);
+  textSize(140);
+  fill(0);
+  text("MIND OVER", 140, 200);
+  text("MEASURE", 170, 300);
+  fill(#E3E3E3);
+  game = new Button(#E3E3E3, #C5CBC7, 200, 450, 160, 70);
+  fill(0);
+  textSize(40);
+  text("GAME", 230, 500);
+  fill(#E3E3E3);
+  sim = new Button(#E3E3E3, #C5CBC7, 450, 450, 260, 70);
+  fill(0);
+  text("SIMULATOR", 480, 500);
+}
+
 void drawNumSelect() {
   int num = 1; //70
   for (int i = 90; i < width && num < 8; i+= 120) {
-    fill(220,220,220);
+    fill(220, 220, 220);
     stroke(#143DA2);
     circle(i, 280, 90);
     textSize(30);
     fill(0);
-    text(""+ num, i,275);
+    text(""+ num, i, 275);
     num++;
   }
 }
@@ -310,7 +344,11 @@ void drawCapTubes() {
     //figure out font stuff
     //PFont font = createFont("STHeitiTC-Medium-30.vlw", 30);
     //textFont(font);
-    fill(255);
+    if (tubeNum == randTube1.capacity || tubeNum == randTube2.capacity) {
+      fill(#F7F7F5);
+    } else {
+      fill(#D8D8D4);
+    }
     stroke(#143DA2);
     int y = 370;
     rect(i, 150, 50, y);
@@ -361,7 +399,7 @@ void drawEmptier() {
   rect(width - 120, 100, 50, 420);
   fill(0);
   textSize(17);
-  text("empty", width - 95, 120);
+  text("empty", 805, 120);
   int y = 400;
   if (emptyStation != null) {
     for (int j = emptyStation.numBalls; j > 0; j--) {
@@ -397,31 +435,31 @@ public static boolean isPossible(Tube one, Tube two, int numBalls) {
 // code should work can you just implement it
 
 
-  void solve(Tube one, Tube two, int numbBalls) {
-    if (one.numBalls==0) {
-      fillStation.fill(one);
-    }
-    //delay(5);
-    one.transfer(two);
-    //delay(5);
-    if (two.numBalls==two.capacity) {
-      emptyStation.empty(two);
-      //delay(5);
-    }
-    if (one.numBalls!=numbBalls && two.numBalls!=numbBalls) {
-      solve(one, two, numbBalls);
-      //delay(5);
-    }
+void solve(Tube one, Tube two, int numbBalls) {
+  if (one.numBalls==0) {
+    fillStation.fill(one);
   }
+  //delay(5);
+  one.transfer(two);
+  //delay(5);
+  if (two.numBalls==two.capacity) {
+    emptyStation.empty(two);
+    //delay(5);
+  }
+  if (one.numBalls!=numbBalls && two.numBalls!=numbBalls) {
+    solve(one, two, numbBalls);
+    //delay(5);
+  }
+}
 
-  void solver(Tube one, Tube two, int numbBalls) {
-    if (one.capacity>two.capacity) {
-      if (isPossible(one, two, numbBalls)) {
-        solve(one, two, numbBalls);
-      }
-    } else {
-      if (isPossible(two, one, numbBalls)) {
-        solve(two, one, numbBalls);
-      }
+void solver(Tube one, Tube two, int numbBalls) {
+  if (one.capacity>two.capacity) {
+    if (isPossible(one, two, numbBalls)) {
+      solve(one, two, numbBalls);
+    }
+  } else {
+    if (isPossible(two, one, numbBalls)) {
+      solve(two, one, numbBalls);
     }
   }
+}
