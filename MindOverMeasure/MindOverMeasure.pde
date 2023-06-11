@@ -1,4 +1,4 @@
-import java.util.*; //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
+import java.util.*; //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
 int chosenNum;
 Tube fillStation;
 Tube emptyStation;
@@ -23,6 +23,7 @@ boolean transferFrom;
 boolean transferInto;
 Button game;
 Button sim;
+Button home;
 
 void setup() {
   size(900, 600);
@@ -36,7 +37,7 @@ void setup() {
 }
 
 void draw() {
-  background(#8AC4F0);
+  background(#EAD980);
   textSize(20);
   fill(0);
   if (MODE==VICTORY) {
@@ -60,6 +61,14 @@ void draw() {
     sim = new Button(#E3E3E3, #C5CBC7, 450, 450, 260, 70);
     fill(0);
     text("SIMULATOR", 480, 500);
+  }
+  if (MODE != HOME) {
+    fill(#D6EAB4);
+    stroke(#A8C479);
+    home = new Button(#D6EAB4, #C0E582, 20, 20, 60, 40);
+    fill(0);
+    textSize(20);
+    text("HOME", 25, 45);
   }
   if (MODE == numSelect) {
     background(#AACCD8);
@@ -111,10 +120,7 @@ void draw() {
     textSize(15);
     fill(0);
     text("MODE: SOLUTION", 700, 560);
-    if (randTube1.numBalls!=chosenNum &&  randTube2.numBalls!=chosenNum) {
-=======
     if (randTube1.numBalls!=chosenNum && randTube2.numBalls!=chosenNum) {
->>>>>>> db697292d3e2a29238292be6c65594b4cee3cddf
       solver(randTube1, randTube2, chosenNum);
     }
   }
@@ -410,24 +416,6 @@ void solve(Tube one, Tube two, int numbBalls) {
   if (one.numBalls!=numbBalls && two.numBalls!=numbBalls) {
     solve(one, two, numbBalls);
   }
-  //}
-
-void solve(Tube one, Tube two, int numbBalls) {
-  if (one.numBalls==0) {
-    fillStation.fill(one);
-  }
-  //delay(5);
-  one.transfer(two);
-  //delay(5);
-  if (two.numBalls==two.capacity) {
-    emptyStation.empty(two);
-    //delay(5);
-  }
-  if (one.numBalls!=numbBalls && two.numBalls!=numbBalls) {
-    solve(one, two, numbBalls);
-    //delay(5);
-  }
-
 }
 
 void solver(Tube one, Tube two, int numbBalls) {
