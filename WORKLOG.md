@@ -26,9 +26,11 @@ Fixed merge conflicts, fixed the transfer method in the Tube class along with fi
 
 ## 6/1/23
 I debugged transfer because there was a bug again because sometimes it transferred when it didn't have to. I added a VICTORY mode that resets the game. Also fixed the random  tube generator Played through the game one time and it worked.
-### 6/9/23
-Changed solve to work in all cases. Fixed ifPossible because it prevented users from clicking the number 7. Created a victory page. Created a way to restart. 
+## 6/9/23
+Changed solve to work in all cases. Fixed ifPossible because it prevented users from clicking the number 7. Created a victory page. Created a way to restart.
 
+## 6/10/23
+Updated README. Changed the numSelect screen to put the different numbers in circles. Fixed spacing for text in numSelect mode and drawEmptier. Worked on victory screen.
 ## Ramisa Haque
 
 ### 5/22/23
