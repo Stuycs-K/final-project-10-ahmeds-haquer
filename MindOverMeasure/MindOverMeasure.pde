@@ -25,6 +25,9 @@ boolean transferInto;
 Button game;
 Button sim;
 Button home;
+int countdown;
+int tracker;
+boolean transfer;
 //public PImage img;
 
 void setup() {
@@ -36,6 +39,9 @@ void setup() {
   fillStation = new Tube();
   emptyStation = new Tube();
   emptyStation.numBalls = 0;
+  countdown=0;
+  tracker=60;
+  transfer=true;
 }
 
 void draw() {
@@ -115,11 +121,18 @@ void draw() {
     text("Click to select a tube to fill.", 330, 90);
   }
   if (MODE == FORFEIT) {
+    countdown+=1;
     textSize(30);
     fill(#3980A2);
     text("SOLUTION", 300, 50);
     if (randTube1.numBalls!=chosenNum && randTube2.numBalls!=chosenNum) {
       solver(randTube1, randTube2, chosenNum);
+    }
+    else{
+    fill(0);
+    textSize(20);
+    textAlign(CENTER,CENTER);
+    text("And that is the solution! You may now press 'r' or 'R' to retry!", 450, 550);
     }
   }
   if (MODE == EMPTY) {
@@ -215,7 +228,7 @@ void drawVictory() {
 
 void mousePressed() {
   color col = get(mouseX, mouseY);
-  println(col);
+  println(mouseY);
   if (col == -1) {
     println(mouseX);
     tempSelectedTube = (mouseX / 80);
@@ -444,31 +457,33 @@ public static boolean isPossible(Tube one, Tube two, int numBalls) {
 // code should work can you just implement it
 
 
-void solve(Tube one, Tube two, int numbBalls) {
-  if (one.numBalls==0) {
-    fillStation.fill(one);
+void solve(Tube one, Tube two) {
+    if (one.numBalls==0&&countdown==tracker) {
+      fillStation.fill(one);
+      tracker+=300;
+      transfer=true;
+      fill(0);
+      textSize(20);
+      textAlign(CENTER,CENTER);
   }
-  //delay(5);
-  one.transfer(two);
-  //delay(5);
-  if (two.numBalls==two.capacity) {
+  else if (transfer&&countdown==tracker){
+    one.transfer(two);
+    println(tracker + " "+countdown);
+    tracker+=300;
+    transfer=false;
+  }
+  else if (two.numBalls==two.capacity&&countdown==tracker) {
+    println(tracker +" "+  countdown);
     emptyStation.empty(two);
-    //delay(5);
+    tracker+=300;
+    transfer=true;
   }
-  if (one.numBalls!=numbBalls && two.numBalls!=numbBalls) {
-    solve(one, two, numbBalls);
-    //delay(5);
   }
-}
 
 void solver(Tube one, Tube two, int numbBalls) {
   if (one.capacity>two.capacity) {
-    if (isPossible(one, two, numbBalls)) {
-      solve(one, two, numbBalls);
-    }
+      solve(one, two);
   } else {
-    if (isPossible(two, one, numbBalls)) {
-      solve(two, one, numbBalls);
-    }
+      solve(two, one);
   }
 }
