@@ -149,6 +149,7 @@ void draw() {
     }
     if (MODE == FILL || MODE == TRANSFER || MODE == EMPTY) {
       color colour = get(mouseX, mouseY);
+      println(colour);
       if (colour != -1) {
         textSize(15);
         fill(#104D62);
@@ -347,7 +348,7 @@ void drawCapTubes() {
     //PFont font = createFont("STHeitiTC-Medium-30.vlw", 30);
     //textFont(font);
     if (tubeNum == randTube1.capacity || tubeNum == randTube2.capacity) {
-      fill(#F7F7F5);
+      fill(255);
     } else {
       fill(#D8D8D4);
     }
