@@ -1,4 +1,4 @@
-import java.util.*; //<>// //<>// //<>// //<>//
+import java.util.*;  //<>//
 int chosenNum;
 Tube fillStation;
 Tube emptyStation;
@@ -177,7 +177,13 @@ void keyTyped() {
         randTube2 = new Tube (capacities[1]);
         MODE = noState;
       }
-    } else if (key == 't' || key == 'T') {
+    }
+    else if (MODE==VICTORY){
+      if (key == 'r'  || key == 'R') {
+      MODE = numSelect;
+    }
+    }
+    else if (key == 't' || key == 'T') {
       MODE = TRANSFER;
     } else if (key == 'f' || key == 'F') {
       MODE = FILL;
