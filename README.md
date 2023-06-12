@@ -22,4 +22,6 @@ A game modeled after the Mind Over Measure exhibit at MoMath. The user is prompt
       You will go into forfeit mode. The solution will be shown to you.
     'r' or 'R' : restart
       You will be able to restart the game and you will be given the option to select an integer again.
+    RESTART Button
+    You will be able to restart the game and you will be given the option to select an integer again.
 5. When you reach the goal, you are victorious! Click 'r' or 'R' to start again!
