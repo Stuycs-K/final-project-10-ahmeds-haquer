@@ -93,7 +93,6 @@ void draw() {
     textAlign(CENTER, CENTER);
     text("Select a number by typing the according key.", 450, 160);
     textSize(20);
-    textAlign(CENTER, CENTER);
     text("The number you select is very important...", 450, 460);
   }
   if (MODE != numSelect && MODE != HOME&& MODE!=INSTRUCTIONS) {
@@ -270,7 +269,7 @@ void mousePressed() {
   if (col == -1) {
     tempSelectedTube = (mouseX / 80);
   }
-  if (MODE != HOME) {
+  if (MODE != HOME&&MODE!=INSTRUCTIONS&&MODE!=VICTORY) {
     if (restart.isPressed()) {
       MODE = numSelect;
     }
@@ -481,7 +480,6 @@ void solve(Tube one, Tube two) {
     transfer=true;
     fill(0);
     textSize(20);
-    textAlign(CENTER, CENTER);
   } else if (transfer&&countdown==tracker) {
     player.play();
     one.transfer(two);
