@@ -73,7 +73,7 @@ void draw() {
     }
     drawInstructions();
   }
-  if (MODE != HOME && MODE!=INSTRUCTIONS) {
+  if (MODE != HOME && MODE!=INSTRUCTIONS&&MODE!=VICTORY) {
     fill(#D6EAB4);
     stroke(#A8C479);
     restart = new Button(#D6EAB4, #C0E582, 20, 20, 60, 40);
@@ -159,7 +159,7 @@ void draw() {
     text("MODE: EMPTY", 700, 560);
   }
   if (MODE == numSelect) {
-    if (keyPressed && key != '1' && key != '2' && key != '3' && key != '4' && key != '5' && key != '6' && key != '7' && key != '8' && key != 'f' && key != 'F' && key != 'T' && key != 't'&& key != 'E' && key != 'e' && key != 's' && key != 'S') {
+    if (keyPressed && key != '1' && key != '2' && key != '3' && key != '4' && key != '5' && key != '6' && key != '7' && key != '8' && key != 'f' && key != 'F' && key != 'T' && key != 't'&& key != 'E' && key != 'e' && key != 's' && key != 'S'&& key != 'r' && key != 'R') {
       textSize(30);
       fill(0);
       textAlign(LEFT);
@@ -185,7 +185,6 @@ void draw() {
     }
     if (MODE == FILL || MODE == TRANSFER || MODE == EMPTY) {
       color colour = get(mouseX, mouseY);
-      //println(colour);
       if (colour != -1) {
         textSize(15);
         fill(#104D62);
@@ -483,12 +482,10 @@ void solve(Tube one, Tube two) {
   } else if (transfer&&countdown==tracker) {
     player.play();
     one.transfer(two);
-    println(tracker + " "+countdown);
     tracker+=300;
     transfer=false;
   } else if (two.numBalls==two.capacity&&countdown==tracker) {
     player.play();
-    println(tracker +" "+  countdown);
     emptyStation.empty(two);
     tracker+=300;
     transfer=true;
