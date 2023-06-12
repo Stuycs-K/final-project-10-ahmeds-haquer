@@ -1,4 +1,4 @@
-import java.util.*; //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
+import java.util.*;  //<>// //<>// //<>//
 int chosenNum;
 Tube fillStation;
 Tube emptyStation;
