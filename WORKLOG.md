@@ -26,6 +26,17 @@ Fixed merge conflicts, fixed the transfer method in the Tube class along with fi
 
 ## 6/1/23
 I debugged transfer because there was a bug again because sometimes it transferred when it didn't have to. I added a VICTORY mode that resets the game. Also fixed the random  tube generator Played through the game one time and it worked.
+### 06/07/23
+Worked through logic to debug the infinite recursion that occurred with solve().
+## 6/9/23
+Changed solve to work in all cases. Fixed ifPossible because it prevented users from clicking the number 7. Created a victory page. Created a way to restart.
+
+## 6/10/23
+Updated README. Changed the numSelect screen to put the different numbers in circles. Fixed spacing for text in numSelect mode and drawEmptier. Worked on victory screen.
+
+## 6/11/23
+Updated README. Added sound to the game. Added an instructions button with a new page. Added an image to the victory page. Slowed down solve to show the process happening.
+
 ## Ramisa Haque
 
 ### 5/22/23
@@ -46,3 +57,9 @@ Fixed merge conflicts and made sure branches were properly updated. Added new st
 Organized code to flow more logically. Debugged (a lot) due to logical errors. Implemented initial interface of the game. Completed implementations of fill and empty (with accompanying visuals), transfer implementation nearly complete, but not quite as intended. Added even more instance variables to keep track of specifics and enhance the flow of the game. Also, added a few on-screen text elements for better UX.
 ### 06/01/23
 Fixed all text to remain on screen for an appropriate amount of time. Made minor changes/rewrites to codes to simplify and minimize memory/maximize efficiency. Added forfeit mode.
+### 06/07/23
+Worked through logic to debug the infinite recursion that occurred with solve().
+### 06/09/23
+Created Button class, implemented a home screen.
+### 06/10/23
+Home button and worked on a simulator mode (didn't make it into the final) and victory mode/screen. Added a couple visuals throughout the game.

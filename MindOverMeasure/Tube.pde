@@ -18,17 +18,17 @@ public class Tube {
     capacity=size;
     numBalls=0;
   }
-  public String toString() {
-    String result="|";
-    for (int i=0; i<capacity; i++) {
-      if (tube[i]==0) {
-        result+="   |";
-      } else {
-        result+=" O |";
-      }
-    }
-    return result;
-  }
+  /*public String toString() {
+   String result="|";
+   for (int i=0; i<capacity; i++) {
+   if (tube[i]==0) {
+   result+="   |";
+   } else {
+   result+=" O |";
+   }
+   }
+   return result;
+   }*/
   private void fillSpot (int index) {
     tube[index]=1;
     numBalls++;
