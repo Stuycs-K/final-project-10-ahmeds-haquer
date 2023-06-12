@@ -1,4 +1,4 @@
-import java.util.*;  //<>//
+import java.util.*;  //<>// //<>//
 import processing.sound.*;
 int chosenNum;
 Tube fillStation;
@@ -32,6 +32,7 @@ boolean transfer;
 SoundFile player;
 SoundFile yay;
 int soundTracker=0;
+int steps=0;
 //public PImage img;
 
 void setup() {
