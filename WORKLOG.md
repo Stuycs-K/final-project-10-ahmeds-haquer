@@ -33,6 +33,10 @@ Changed solve to work in all cases. Fixed ifPossible because it prevented users 
 
 ## 6/10/23
 Updated README. Changed the numSelect screen to put the different numbers in circles. Fixed spacing for text in numSelect mode and drawEmptier. Worked on victory screen.
+
+## 6/11/23
+Updated README. Added sound to the game. Added an instructions button with a new page. Added an image to the victory page. Slowed down solve to show the process happening.
+
 ## Ramisa Haque
 
 ### 5/22/23
