@@ -1,9 +1,6 @@
-<<<<<<< HEAD
-import java.util.*;  //<>// //<>// //<>//
-=======
-import java.util.*; //<>// //<>//
+import java.util.*; //<>//
+import java.util.*; //<>//
 import processing.sound.*;
->>>>>>> c767d2d003417638d0deae9f126bf05dafca744f
 int chosenNum;
 Tube fillStation;
 Tube emptyStation;
@@ -166,6 +163,7 @@ void draw() {
     if (keyPressed && key != '1' && key != '2' && key != '3' && key != '4' && key != '5' && key != '6' && key != '7' && key != '8' && key != 'f' && key != 'F' && key != 'T' && key != 't'&& key != 'E' && key != 'e' && key != 's' && key != 'S') {
       textSize(30);
       fill(0);
+      textAlign(LEFT);
       text("Please select a valid key option.", 20, 40);
     }
   }
